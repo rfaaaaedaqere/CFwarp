@@ -596,8 +596,9 @@ case "$menuNumberInput" in
  0 ) exit 0;;
 esac
 else
-red "无法检测，请向作者反馈 https://github.com/kkkyg/CFwarp/issues"
-exit 1
+wg-quick down wgcf >/dev/null 2>&1
+systemctl restart wg-quick@wgcf >/dev/null 2>&1
+bash CFwarp.sh
 fi
 }
 start_menu "first" 
