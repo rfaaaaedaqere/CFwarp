@@ -270,6 +270,11 @@ wg-quick up wgcf
 
 关闭systemctl disable wg-quick@wgcf
 
+systemctl is-active warp-svc
+systemctl is-enabled warp-svc
+warp-cli --accept-tos status
+warp-cli --accept-tos account
+warp-cli --accept-tos settings
 
 ---------------------------------------------------------------------------------------------------------
 #### 感谢P3terx，参考来源：https://github.com/P3TERX/warp.sh
