@@ -536,7 +536,7 @@ case "$menuNumberInput" in
  2 ) upcore;;
  3 ) BBR;;
  4 ) Netflix;; 
- 5 ) ABC1=${c4} && ABC2=${c2} && ABC3=${c5}; ins;;
+ 5 ) ABC1=${c4} && ABC2=${c2} && ABC3=${c6}; ins;;
  6 ) ABC1=${ud6} && ABC2=${c1} && ABC3=${c4} && ABC4=${c6}; ins;;
  7 ) ABC1=${ud6} && ABC2=${c4} && ABC3=${c5}; ins;;
  8 ) warpplus;;
