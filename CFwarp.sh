@@ -162,7 +162,6 @@ exit 1
 fi
 fi
 
-[[ ${vi} == "lxc" ]] && echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
 if [ $release = "Centos" ]; then  
 yum -y install epel-release
 yum -y install net-tools wireguard-tools	
