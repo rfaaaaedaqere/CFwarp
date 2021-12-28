@@ -372,8 +372,8 @@ if [[ ${vi} == "kvm" || ${vi} == "xen" || ${vi} == "microsoft" ]]; then
 if [[ -z ${bbr} ]]; then
 yellow "检测完毕：未开启BBR加速，安装BBR加速中……" 
 sleep 2s
-echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf >/dev/null 2>&1
-echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf >/dev/null 2>&1
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf 
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf 
 sysctl -p
 lsmod | grep bbr
 green "已开启BBR加速"
