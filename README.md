@@ -10,9 +10,15 @@
 - [x] 支持WARP普通账户升级：1、WARP+Teams无限流量账户，2、WARP+有限流量账户！
 - [x] 支持screen管理菜单，以方便对一键screen无限刷流量、一键screen刷奈飞IP的管理及查询相关状态！
 
-目前老版本一键脚本：
+目前新版本一键脚本：
 ```
 wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp.sh && bash CFwarp.sh
+```
+
+
+老版本一键脚本：
+```
+wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp1.sh && bash CFwarp1.sh
 ```
 
 进入脚本快捷方式 ```bash CFwarp.sh```
