@@ -619,7 +619,8 @@ case "$cd" in
 AutoNF
 screen -dmS aw bash -c '/bin/bash /root/NFC.sh' && green "设置screen窗口名称'aw'，离线后台自动刷奈飞IP"
 grep -qE "^ *@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" /etc/crontab || echo "@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" >> /etc/crontab
-green "添加VPS重启后自动刷奈飞IP功能，重启VPS后自动生效";;
+green "添加VPS重启后自动刷奈飞IP功能，重启VPS后自动生效"
+back;;
 2 )
 sed -i '/NFC.sh/d' /etc/crontab >/dev/null 2>&1 && green "卸载完成";;
 0 ) REnfwarp
