@@ -617,8 +617,9 @@ case "$cd" in
 1 )
 [[ ! $(type -P screen) ]] && yellow "检测到screen未安装，升级安装中" && $yumapt install screen
 AutoNF
-screen -dmS aw bash -c '/bin/bash /root/NFC.sh' && green "设置screen窗口名称'aw'，离线后台自动刷奈飞IP"
-grep -qE "^ *@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" /etc/crontab || echo "@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" >> /etc/crontab
+[[ -e /root/NFC.sh ]] && screen -S aw -X quit >/dev/null 2>&1 && screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1
+green "设置screen窗口名称'aw'，离线后台自动刷奈飞IP" && sleep 2
+grep -qE "^ *@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" /etc/crontab || echo "@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" >> /etc/crontab >/dev/null 2>&1
 green "添加VPS重启后自动刷奈飞IP功能，重启VPS后自动生效"
 back;;
 2 )
