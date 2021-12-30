@@ -15,12 +15,6 @@
 wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp.sh && bash CFwarp.sh
 ```
 
-
-老版本一键脚本：
-```
-wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp1.sh && bash CFwarp1.sh
-```
-
 进入脚本快捷方式 ```bash CFwarp.sh```
 
 
