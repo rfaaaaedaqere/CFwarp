@@ -265,14 +265,14 @@ wj="rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-prof
 }
 
 start_menu(){
-ShowWGCF;ShowSOCKS5
+ShowWGCF
 clear
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 bblue " WARP-WGCF/SOCKS5安装脚本：Beta1"
 yellow " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃"    
 yellow " 切记：进入脚本快捷方式 bash CFwarp.sh "    
 green "  1. 安装Wgcf-WARP:虚拟IPV4"      
-green "  2. WARP开启、停止、卸载"
+green "  2. WARP卸载"
 green "  0. 退出脚本 "
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 white " VPS系统信息如下："
