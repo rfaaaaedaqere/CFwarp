@@ -299,19 +299,19 @@ ab="1.设置IPV4优先\n2.设置IPV6优先\n3.恢复系统默认优先\n0.返回
 readp "$ab" cd
 case "$cd" in 
 1 )
-grep -qE '^ *precedence ::ffff:0:0/96  100' /etc/gai.conf || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf >/dev/null 2>&1
-sed -i '/^label 2002::\/16   2/d' /etc/gai.conf >/dev/null 2>&1
+grep -qE '^ *precedence ::ffff:0:0/96  100' /etc/gai.conf || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf 2>/dev/null
+sed -i '/^label 2002::\/16   2/d' /etc/gai.conf 2>/dev/null
 v46=`curl -s https://ip.gs -k`
 [[ $v46 =~ '.' ]] && green "当前VPS本地为IPV4优先：$v46" || green "当前VPS本地为IPV6优先：$v46"
 back;;
 2 )
-grep -qE '^ *label 2002::/16   2' /etc/gai.conf || echo 'label 2002::/16   2' >> /etc/gai.conf >/dev/null 2>&1
-sed -i '/^precedence ::ffff:0:0\/96  100/d' /etc/gai.conf >/dev/null 2>&1
+grep -qE '^ *label 2002::/16   2' /etc/gai.conf || echo 'label 2002::/16   2' >> /etc/gai.conf 2>/dev/null
+sed -i '/^precedence ::ffff:0:0\/96  100/d' /etc/gai.conf 2>/dev/null
 v46=`curl -s https://ip.gs -k`
 [[ $v46 =~ '.' ]] && green "当前VPS本地为IPV4优先：$v46" || green "当前VPS本地为IPV6优先：$v46"
 back;;
 3 )
-sed -i '/^precedence ::ffff:0:0\/96  100/d;/^label 2002::\/16   2/d' /etc/gai.conf >/dev/null 2>&1
+sed -i '/^precedence ::ffff:0:0\/96  100/d;/^label 2002::\/16   2/d' /etc/gai.conf 2>/dev/null
 v46=`curl -s https://ip.gs -k`
 [[ $v46 =~ '.' ]] && green "当前VPS本地为IPV4优先：$v46" || green "当前VPS本地为IPV6优先：$v46"
 back;;
