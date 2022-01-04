@@ -45,6 +45,7 @@ main=`uname  -r | awk -F . '{print $1 }'`
 minor=`uname -r | awk -F . '{print $2}'`
 uname -m | grep -q -E -i "aarch" && cpu=ARM64 || cpu=AMD64
 vi=`systemd-detect-virt`
+bbr=`sysctl net.ipv4.tcp_congestion_control | awk -F ' ' '{print $3}'`
 if [[ $vi = openvz ]]; then
 yellow "正在检测openvz架构的vps是否开启TUN………"&& sleep 2
 TUN=$(cat /dev/net/tun 2>&1)
@@ -733,7 +734,7 @@ green "  8. WARP开启、停止、卸载"
 green "  0. 退出脚本 "
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 white " VPS系统信息如下："
-white " VPS操作系统: $(blue "$op") \c" && white " 内核版本: $(blue "$version") \c" && white " CPU架构 : $(blue "$cpu") \c" && white " 虚拟化类型: $(blue "$vi")"
+white " VPS操作系统: $(blue "$op") \c" && white " 内核版本: $(blue "$version") \c" && white " CPU架构 : $(blue "$cpu") \c" && white " 虚拟化类型: $(blue "$vi") \c" && white " 当前TCP算法: $(blue "$bbr")"
 IP_Status_menu
 echo
 readp "请输入数字:" Input
