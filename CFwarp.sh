@@ -734,7 +734,7 @@ green "  8. WARP开启、停止、卸载"
 green "  0. 退出脚本 "
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 white " VPS系统信息如下："
-white " VPS操作系统: $(blue "$op") \c" && white " 内核版本: $(blue "$version") \c" && white " CPU架构 : $(blue "$cpu") \c" && white " 虚拟化类型: $(blue "$vi") \c" && white " 当前TCP算法: $(blue "$bbr")"
+white " VPS操作系统: $(blue "$op") \c" && white " 内核版本: $(blue "$version") \c" && white " CPU架构 : $(blue "$cpu") \c" && white " 虚拟化类型: $(blue "$vi") \c" && white " TCP算法: $(blue "$bbr")"
 IP_Status_menu
 echo
 readp "请输入数字:" Input
