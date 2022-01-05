@@ -100,9 +100,9 @@ case ${wgcfv6} in
 plus) 
 WARPIPv6Status=$(white "IPV6 WARP+状态：\c" ; rred "运行中，$cfplus" ; white " [ Cloudflare服务商 ]获取IPV6：\c" ; rred "$v6" ; white " IPV6 奈飞NF解锁情况：\c" ; rred "$NF  \c"; white " IPV6 所在地区：\c" ; rred "$g6");;  
 on) 
-WARPIPv6Status=$(white "IPV6 WARP状态：\c" ; green "运行中，WARP普通账户(无限WARP流量)" ; white " [ Cloudflare服务商 ]获取IPV4：\c" ; green "$v6" ; white " IPV6 奈飞NF解锁情况：\c" ; green "$NF  \c"; white " IPV6 所在地区：\c" ; green "$g6");;
+WARPIPv6Status=$(white "IPV6 WARP状态：\c" ; green "运行中，WARP普通账户(无限WARP流量)" ; white " [ Cloudflare服务商 ]获取IPV6：\c" ; green "$v6" ; white " IPV6 奈飞NF解锁情况：\c" ; green "$NF  \c"; white " IPV6 所在地区：\c" ; green "$g6");;
 off) 
-WARPIPv6Status=$(white "IPV6 WARP状态：\c" ; yellow "关闭中" ; white " [ $isp6服务商 ]获取IPV4：\c" ; yellow "$v6" ; white " IPV6 奈飞NF解锁情况：\c" ; yellow "$NF  \c"; white " IPV6 所在地区：\c" ; yellow "$g6");;
+WARPIPv6Status=$(white "IPV6 WARP状态：\c" ; yellow "关闭中" ; white " [ $isp6服务商 ]获取IPV6：\c" ; yellow "$v6" ; white " IPV6 奈飞NF解锁情况：\c" ; yellow "$NF  \c"; white " IPV6 所在地区：\c" ; yellow "$g6");;
 esac 
 else
 WARPIPv6Status=$(white "IPV6 状态：\c" ; red "不存在IPV6地址 ")
