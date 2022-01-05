@@ -41,7 +41,7 @@ main=`uname  -r | awk -F . '{print $1 }'`
 minor=`uname -r | awk -F . '{print $2}'`
 uname -m | grep -q -E -i "aarch" && cpu=ARM64 || cpu=AMD64
 vi=`systemd-detect-virt`
-if [[ -n $(sysctl net.ipv4.tcp_congestion_control | awk -F ' ' '{print $3}') ]]; then
+if [[ -n $(sysctl net.ipv4.tcp_congestion_control 2>/dev/null | awk -F ' ' '{print $3}') ]]; then
 bbr=`sysctl net.ipv4.tcp_congestion_control | awk -F ' ' '{print $3}'`
 elif [[ $(systemctl is-active lkl-haproxy) = active && -n $(ping 10.0.0.2 -c 3 | grep ttl) ]]; then
 bbr="openvz版BBR-PLUS"
