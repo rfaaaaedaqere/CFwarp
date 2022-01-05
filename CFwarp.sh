@@ -43,9 +43,8 @@ uname -m | grep -q -E -i "aarch" && cpu=ARM64 || cpu=AMD64
 vi=`systemd-detect-virt`
 bbr=`sysctl net.ipv4.tcp_congestion_control | awk -F ' ' '{print $3}'`
 if [[ $vi = openvz ]]; then
-yellow "正在检测openvz架构的vps是否开启TUN………"&& sleep 2
 TUN=$(cat /dev/net/tun 2>&1)
-[[ ${TUN} = "cat: /dev/net/tun: File descriptor in bad state" ]] && green "检测完毕：已开启TUN，支持安装wireguard-go模式的WARP，继续……" || (red "检测完毕：未开启TUN，不支持安装WARP(+)，请与VPS厂商沟通或后台设置以开启TUN" && exit 1)
+[[ ${TUN} = "cat: /dev/net/tun: File descriptor in bad state" ]] || (red "检测完毕：未开启TUN，不支持安装WARP(+)，请与VPS厂商沟通或后台设置以开启TUN" && exit 1)
 fi
 [[ $(type -P yum) ]] && yumapt='yum -y' || yumapt='apt -y'
 [[ $(type -P curl) ]] || (yellow "检测到curl未安装，升级安装中" && $yumapt update;$yumapt install curl)
