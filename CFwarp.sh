@@ -230,7 +230,7 @@ i=0
 wg-quick down wgcf >/dev/null 2>&1
 systemctl start wg-quick@wgcf >/dev/null 2>&1
 while [ $i -le 4 ]; do let i++
-WG && green "WARP的IP获取成功" && break || red "WARP的IP获取失败"
+WG && green "恭喜！WARP的IP获取成功！" && break || red "WARP的IP获取失败"
 done
 }
 
