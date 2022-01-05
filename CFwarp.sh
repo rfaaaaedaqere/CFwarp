@@ -218,6 +218,15 @@ white "-------------------------------------------------------------------------
 WGCFmenu;S5menu 
 }
 
+WARPlost(){
+red "遗憾！WARP的IP获取失败"
+green "建议如下："
+[[ $release = Centos && ${vsid} -lt 7 ]] && yellow "当前系统版本号：Centos $vsid \n建议使用 Centos 7 以上系统 " 
+[[ $release = Ubuntu && ${vsid} -lt 18 ]] && yellow "当前系统版本号：Ubuntu $vsid \n建议使用 Ubuntu 18 以上系统 " 
+[[ $release = Debian && ${vsid} -lt 10 ]] && yellow "当前系统版本号：Debian $vsid \n建议使用 Debian 10 以上系统 "
+yellow "强烈建议使用官方源升级系统及内核加速！已使用第三方源及内核加速，请务必更新到最新版！"
+}
+
 WG(){
 systemctl restart wg-quick@wgcf >/dev/null 2>&1
 ShowWGCF
@@ -230,7 +239,7 @@ i=0
 wg-quick down wgcf >/dev/null 2>&1
 systemctl start wg-quick@wgcf >/dev/null 2>&1
 while [ $i -le 4 ]; do let i++
-WG && green "恭喜！WARP的IP获取成功！" && break || red "WARP的IP获取失败"
+WG && green "恭喜！WARP的IP获取成功！" && break || WARPlost
 done
 }
 
