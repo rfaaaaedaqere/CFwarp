@@ -43,7 +43,7 @@ uname -m | grep -q -E -i "aarch" && cpu=ARM64 || cpu=AMD64
 vi=`systemd-detect-virt`
 if [[ -n $(sysctl net.ipv4.tcp_congestion_control 2>/dev/null | awk -F ' ' '{print $3}') ]]; then
 bbr=`sysctl net.ipv4.tcp_congestion_control | awk -F ' ' '{print $3}'`
-elif [[ $(systemctl is-active lkl-haproxy) = active && -n $(ping 10.0.0.2 -c 3 | grep ttl) ]]; then
+elif [[ -n $(ping 10.0.0.2 -c 2 | grep ttl) ]]; then
 bbr="openvz版BBR-PLUS"
 else
 bbr="暂不支持显示"
