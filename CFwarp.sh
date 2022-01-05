@@ -149,7 +149,7 @@ ABC1=$ud4 && ABC2=$c2 && ABC3=$c5 && WGCFins
 fi
 if [[ -n $v6 && -z $v4 ]]; then
 green "vps真IP特征:原生v6单栈vps\n现添加Wgcf-WARP-IPV4单栈"
-ABC1=$c2 && ABC2=$c4 && ABC3=$c6 && WGCFins
+ABC1=$c2 && ABC2=$c4 && ABC3=$c5 && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV4单栈"
@@ -183,7 +183,7 @@ STOPwgcf && ABC1=$ud4ud6 && ABC2=$c5 && WGCFins
 fi
 if [[ -n $v6 && -z $v4 ]]; then
 green "vps真IP特征:原生v6单栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
-STOPwgcf && ABC1=$ud6 && ABC2=$c4 && ABC3=$c6 && WGCFins
+STOPwgcf && ABC1=$ud6 && ABC2=$c4 && ABC3=$c5 && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
