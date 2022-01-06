@@ -338,12 +338,12 @@ rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.
 ShowWGCF
 [[ $isp6 = 'ISPpro Internet KG' && $vi = lxc ]] && echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
 if [[ $release = Centos ]]; then
-yum install epel-release -y;yum install iptables -y;yum install iproute wireguard-tools -y
+yum install epel-release -y;yum install iproute wireguard-tools -y
 elif [[ $release = Debian ]]; then
-apt install iptables -y;apt install lsb-release -y;echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
+apt install lsb-release -y;echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
 apt update -y;apt install iproute2 openresolv -y;apt install wireguard-tools --no-install-recommends -y      		
 elif [[ $release = Ubuntu ]]; then
-apt update -y;apt install iptables -y;apt install iproute2 openresolv -y;apt install wireguard-tools --no-install-recommends -y			
+apt update -y;apt install iproute2 openresolv -y;apt install wireguard-tools --no-install-recommends -y			
 fi
 [[ $cpu = AMD64 ]] && wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_amd64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf         
 [[ $cpu = ARM64 ]] && wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_arm64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
@@ -354,11 +354,11 @@ if [[ $vi =~ lxc|openvz ]]; then
 [[ -e /usr/bin/wireguard-go ]] || wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
 mkdir -p /etc/wireguard/ >/dev/null 2>&1
-echo | wgcf register
+wgcf register
 until [[ -e wgcf-account.toml ]]
 do
-yellow "申请WARP普通账户过程中可能会多次提示：429 Too Many Requests，请耐心等待" && sleep 1
-echo | wgcf register
+yellow "申请WARP普通账户过程中可能会多次提示：429 Too Many Requests，请等待30秒" && sleep 1
+wgcf register
 done
 wgcf generate
 yellow "开始自动设置WARP的MTU最佳网络吞吐量值，以优化WARP网络！"
