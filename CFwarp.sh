@@ -44,7 +44,7 @@ vi=`systemd-detect-virt`
 if [[ -n $(sysctl net.ipv4.tcp_congestion_control 2>/dev/null | awk -F ' ' '{print $3}') ]]; then
 bbr=`sysctl net.ipv4.tcp_congestion_control | awk -F ' ' '{print $3}'`
 elif [[ -n $(ping 10.0.0.2 -c 2 | grep ttl) ]]; then
-bbr="openvz版BBR-PLUS"
+bbr="openvz版bbr-plus"
 else
 bbr="暂不支持显示"
 fi
