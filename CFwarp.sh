@@ -141,8 +141,12 @@ fi
 
 STOPwgcf(){
 if [[ $(type -P warp-cli) ]]; then
-red "已安装Socks5-WARP(+)，不支持当前选择的Wgcf-WARP(+)的安装方案" && bash CFwarp.sh
+red "已安装Socks5-WARP(+)，不支持当前选择的Wgcf-WARP(+)安装方案" && bash CFwarp.sh
 fi
+}
+
+eucos(){
+[[ $isp6 = 'ISPpro Internet KG' && $release = Centos ]] && echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
 }
 
 WGCFv4(){
@@ -171,7 +175,7 @@ ABC1=$ud6 && ABC2=$c1 && ABC3=$c5 && WGCFins
 fi
 if [[ -n $v6 && -z $v4 ]]; then
 green "vps真IP特征:原生v6单栈vps\n现添加Wgcf-WARP-IPV6单栈 (无IPV4！！！)"
-STOPwgcf && ABC1=$ud6 && ABC2=$c1 && ABC3=$c4 && ABC4=$c6 && WGCFins
+STOPwgcf && ABC1=$ud6 && ABC2=$c1 && ABC3=$c4 && ABC4=$c6 && ABC5=eucos && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV6单栈"
@@ -188,7 +192,7 @@ STOPwgcf && ABC1=$ud4ud6 && ABC2=$c5 && WGCFins
 fi
 if [[ -n $v6 && -z $v4 ]]; then
 green "vps真IP特征:原生v6单栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
-STOPwgcf && ABC1=$ud6 && ABC2=$c4 && ABC3=$c5 && WGCFins
+STOPwgcf && ABC1=$ud6 && ABC2=$c4 && ABC3=$c5 && ABC5=eucos && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
@@ -399,10 +403,10 @@ echo $ABC1 | sh
 echo $ABC2 | sh
 echo $ABC3 | sh
 echo $ABC4 | sh
+echo $ABC5 | sh
 cp -f wgcf-profile.conf /etc/wireguard/wgcf.conf >/dev/null 2>&1
 mv -f wgcf-profile.conf /etc/wireguard >/dev/null 2>&1
 mv -f wgcf-account.toml /etc/wireguard >/dev/null 2>&1
-
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
 CheckWARP
 [[ -e /root/NFC.sh ]] && screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1
