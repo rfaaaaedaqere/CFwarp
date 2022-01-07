@@ -354,11 +354,11 @@ if [[ $vi =~ lxc|openvz ]]; then
 [[ -e /usr/bin/wireguard-go ]] || wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
 mkdir -p /etc/wireguard/ >/dev/null 2>&1
-wgcf register
+echo | wgcf register
 until [[ -e wgcf-account.toml ]]
 do
 yellow "申请WARP普通账户过程中可能会多次提示：429 Too Many Requests，请等待30秒" && sleep 1
-wgcf register
+echo | wgcf register
 done
 wgcf generate
 yellow "开始自动设置WARP的MTU最佳网络吞吐量值，以优化WARP网络！"
