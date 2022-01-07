@@ -223,15 +223,6 @@ white "-------------------------------------------------------------------------
 WGCFmenu;S5menu 
 }
 
-WARPlost(){
-red "遗憾！WARP的IP获取失败"
-green "建议如下："
-[[ $release = Centos && ${vsid} -lt 7 ]] && yellow "当前系统版本号：Centos $vsid \n建议使用 Centos 7 以上系统 " 
-[[ $release = Ubuntu && ${vsid} -lt 18 ]] && yellow "当前系统版本号：Ubuntu $vsid \n建议使用 Ubuntu 18 以上系统 " 
-[[ $release = Debian && ${vsid} -lt 10 ]] && yellow "当前系统版本号：Debian $vsid \n建议使用 Debian 10 以上系统 "
-yellow "强烈建议使用官方源升级系统及内核加速！已使用第三方源及内核加速，请务必更新到最新版！"
-}
-
 WG(){
 systemctl restart wg-quick@wgcf >/dev/null 2>&1
 ShowWGCF
@@ -244,8 +235,16 @@ i=0
 wg-quick down wgcf >/dev/null 2>&1
 systemctl start wg-quick@wgcf >/dev/null 2>&1
 while [ $i -le 4 ]; do let i++
-WG && green "恭喜！WARP的IP获取成功！" && break || WARPlost
+WG && green "恭喜！WARP的IP获取成功！" && break || red "遗憾！WARP的IP获取失败"
 done
+ShowWGCF
+if [[ ! $wgcfv4 =~ on|plus && ! $wgcfv6 =~ on|plus ]]; then
+green "失败建议如下："
+[[ $release = Centos && ${vsid} -lt 7 ]] && yellow "当前系统版本号：Centos $vsid \n建议使用 Centos 7 以上系统 " 
+[[ $release = Ubuntu && ${vsid} -lt 18 ]] && yellow "当前系统版本号：Ubuntu $vsid \n建议使用 Ubuntu 18 以上系统 " 
+[[ $release = Debian && ${vsid} -lt 10 ]] && yellow "当前系统版本号：Debian $vsid \n建议使用 Debian 10 以上系统 "
+yellow "强烈建议使用官方源升级系统及内核加速！如已使用第三方源及内核加速，请务必更新到最新版，或重置为官方源"
+yellow "有疑问请向作者反馈 https://github.com/kkkyg/CFwarp/issues"
 }
 
 get_char(){
@@ -401,7 +400,7 @@ cp -f wgcf-profile.conf /etc/wireguard/wgcf.conf >/dev/null 2>&1
 mv -f wgcf-profile.conf /etc/wireguard >/dev/null 2>&1
 mv -f wgcf-account.toml /etc/wireguard >/dev/null 2>&1
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
-CheckWARP 
+CheckWARP
 [[ -e /root/NFC.sh ]] && screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1
 ShowWGCF && WGCFmenu && back
 }
