@@ -336,8 +336,8 @@ WGCFins(){
 [[ -e /root/NFC.sh ]] && screen -S aw -X quit >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.conf /etc/wireguard/wgcf-account.toml /etc/wireguard/wgcf+p.log /etc/wireguard/ID /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 ShowWGCF
-[[ $isp6 = 'ISPpro Internet KG' && $vi = lxc ]] && echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
 if [[ $release = Centos ]]; then
+[[ $isp6 = 'ISPpro Internet KG' && $vi = lxc ]] && echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
 yum install epel-release -y;yum install iproute wireguard-tools -y
 elif [[ $release = Debian ]]; then
 apt install lsb-release -y;echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
