@@ -333,6 +333,7 @@ esac
 }
 
 WGCFins(){
+systemctl stop wg-quick@wgcf >/dev/null 2>&1
 [[ -e /root/NFC.sh ]] && screen -S aw -X quit >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.conf /etc/wireguard/wgcf-account.toml /etc/wireguard/wgcf+p.log /etc/wireguard/ID /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 ShowWGCF
