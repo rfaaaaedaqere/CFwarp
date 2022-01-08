@@ -4,7 +4,7 @@
 ## 支持KVM、lxc、openvz等架构VPS的WARP一键综合脚本
 
 - [x] 支持自动识别系统类型，CPU架构(X86/ARM)，内核版本，虚拟化架构类型！
-- [x] 支持Ubuntu/Centos/Debain最新系统，包含Centos各类衍生版本！
+- [x] 支持Ubuntu 18 /Centos 7/Debain 10 以上最新系统，包含Centos各类衍生版本！
 - [x] 支持纯IPV4，纯IPV6，双栈IPV4+IPV6三大类VPS，每类三种Wgcf-WARP安装形式，以及Socks5-WARP客户端！
 - [x] 支持主菜单实时显示当前可用IP是否解锁奈飞Netflix，可选择前台手动、前后台自动、重启自动刷支持奈飞Netflix的IP！
 - [x] 支持WARP普通账户升级：1、WARP+Teams无限流量账户，2、WARP+有限流量账户！
