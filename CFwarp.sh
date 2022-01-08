@@ -290,7 +290,8 @@ rm -rf /etc/iptables/rules.v4 && rm -rf /etc/iptables/rules.v6
 green "甲骨文VPS的系统所有端口规则已打开";;
 3 )
 if [[ $vi = lxc ]]; then
-red "VPS虚拟化类型为lxc，目前不支持当前VPS的架构安装各类加速 "
+[[ -n $(lsmod | grep bbr) ]] && green "已开启系统自带的BBR+FQ加速"
+red "VPS虚拟化类型为lxc，目前不支持安装第三方各类加速 "
 elif [[ $vi = openvz ]]; then
 green "VPS虚拟化类型为openvz，支持lkl-haproxy版的BBR-PLUS加速" && wget --no-cache -O lkl-haproxy.sh https://github.com/mzz2017/lkl-haproxy/raw/master/lkl-haproxy.sh && bash lkl-haproxy.sh
 elif [[ ! $vi =~ lxc|openvz ]]; then
