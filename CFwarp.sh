@@ -71,6 +71,7 @@ v6=$(curl -s6m5 https://ip.gs -k)
 v4=$(curl -s4m5 https://ip.gs -k)
 isp4=`curl -s https://api.ip.sb/geoip/$v4 -k | awk -F "isp" '{print $2}' | awk -F "offset" '{print $1}' | sed "s/[,\":]//g"`
 isp6=`curl -s https://api.ip.sb/geoip/$v6 -k | awk -F "isp" '{print $2}' | awk -F "offset" '{print $1}' | sed "s/[,\":]//g"`
+nat64="echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf"
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
 [[ -e /etc/wireguard/wgcf+p.log ]] && cfplus="WARP+普通账户(有限WARP+流量)，设备名称：$(grep -s 'Device name' /etc/wireguard/wgcf+p.log | awk '{ print $NF }')" || cfplus="WARP+Teams账户(无限WARP+流量)"
 AE="阿联酋（United Arab Emirates）";AU="澳大利亚（Australia）";BG="保加利亚（Bulgaria）";BR="巴西（Brazil）";CA="加拿大（Canada）";CH="瑞士（Switzerland）";CL="智利（Chile)";CN="中国（China）";CO="哥伦比亚（Colombia）";DE="德国（Germany)";ES="西班牙（Spain)";FI="芬兰（Finland）";FR="法国（France）";HK="香港（Hong Kong）";ID="印度尼西亚（Indonesia）";IE="爱尔兰（Ireland）";IL="以色列（Israel）";IN="印度（India）";IT="意大利（Italy）";JP="日本（Japan）";KR="韩国（South Korea）";LU="卢森堡（Luxembourg）";MX="墨西哥（Mexico）";MY="马来西亚（Malaysia）";NL="荷兰（Netherlands）";NZ="新西兰（New Zealand）";PH="菲律宾（Philippines）";RO="罗马尼亚（Romania）";RU="俄罗斯（Russian）";SA="沙特（Saudi Arabia）";SE="瑞典（Sweden）";SG="新加坡（Singapore）";TW="台湾（Taiwan）";UK="英国（United Kingdom）";US="美国（United States）";VN="越南（Vietnam）";ZA="南非（South Africa）"
@@ -145,12 +146,9 @@ red "已安装Socks5-WARP(+)，不支持当前选择的Wgcf-WARP(+)安装方案"
 fi
 }
 
-eucos(){
-[[ $isp6 = 'ISPpro Internet KG' && $release = Centos ]] && echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
-}
-
 WGCFv4(){
 systemctl stop wg-quick@wgcf >/dev/null 2>&1
+[[ -n $(grep 'DiG 9' /etc/hosts) ]] && echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
 ShowWGCF
 if [[ -n $v4 && -n $v6 ]]; then
 green "vps真IP特征:原生v4+v6双栈vps\n现添加Wgcf-WARP-IPV4单栈"
@@ -168,6 +166,7 @@ fi
 
 WGCFv6(){
 systemctl stop wg-quick@wgcf >/dev/null 2>&1
+[[ -n $(grep 'DiG 9' /etc/hosts) ]] && echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
 ShowWGCF
 if [[ -n $v4 && -n $v6 ]]; then
 green "vps真IP特征:原生v4+v6双栈vps\n现添加Wgcf-WARP-IPV6单栈"
@@ -175,7 +174,7 @@ ABC1=$ud6 && ABC2=$c1 && ABC3=$c5 && WGCFins
 fi
 if [[ -n $v6 && -z $v4 ]]; then
 green "vps真IP特征:原生v6单栈vps\n现添加Wgcf-WARP-IPV6单栈 (无IPV4！！！)"
-STOPwgcf && ABC1=$ud6 && ABC2=$c1 && ABC3=$c4 && ABC4=$c6 && ABC5=eucos && WGCFins
+STOPwgcf && ABC1=$ud6 && ABC2=$c1 && ABC3=$c4 && ABC4=$c6 && ABC5=$nat64 && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV6单栈"
@@ -185,6 +184,7 @@ fi
 
 WGCFv4v6(){
 systemctl stop wg-quick@wgcf >/dev/null 2>&1
+[[ -n $(grep 'DiG 9' /etc/hosts) ]] && echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
 ShowWGCF
 if [[ -n $v4 && -n $v6 ]]; then
 green "vps真IP特征:原生v4+v6双栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
@@ -192,7 +192,7 @@ STOPwgcf && ABC1=$ud4ud6 && ABC2=$c5 && WGCFins
 fi
 if [[ -n $v6 && -z $v4 ]]; then
 green "vps真IP特征:原生v6单栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
-STOPwgcf && ABC1=$ud6 && ABC2=$c4 && ABC3=$c5 && ABC5=eucos && WGCFins
+STOPwgcf && ABC1=$ud6 && ABC2=$c4 && ABC3=$c5 && ABC5=$nat64 && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
@@ -337,13 +337,10 @@ esac
 }
 
 WGCFins(){
-systemctl stop wg-quick@wgcf >/dev/null 2>&1
-[[ -n $(grep 'DiG 9' /etc/hosts) ]] && echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
 [[ -e /root/NFC.sh ]] && screen -S aw -X quit >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.conf /etc/wireguard/wgcf-account.toml /etc/wireguard/wgcf+p.log /etc/wireguard/ID /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 ShowWGCF
 if [[ $release = Centos ]]; then
-[[ -z $(grep 'DiG 9' /etc/hosts) && $vi = lxc ]] && echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
 yum install epel-release -y;yum install iproute wireguard-tools -y
 elif [[ $release = Debian ]]; then
 apt install lsb-release -y;echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
