@@ -354,8 +354,6 @@ fi
 if [[ $main -lt 5 || $minor -lt 6 ]] || [[ $vi =~ lxc|openvz ]]; then
 [[ -e /usr/bin/wireguard-go ]] || wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
-[[ -z $(lsmod | grep wireguard) ]] && wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
-mkdir -p /etc/wireguard/ >/dev/null 2>&1
 echo | wgcf register
 until [[ -e wgcf-account.toml ]]
 do
