@@ -379,14 +379,9 @@ MTUc=1
 MTUy=$((${MTUy} + ${MTUc}))
 else
 MTUy=$((${MTUy} - ${MTUc}))
-if [[ ${MTUc} = 1 ]]; then
-break
+[[ ${MTUc} = 1 ]] && break
 fi
-fi
-if [[ ${MTUy} -le 1360 ]]; then
-MTUy='1360'
-break
-fi
+[[ ${MTUy} -le 1360 ]] && MTUy='1360' && break
 done
 MTU=$((${MTUy} - 80))
 green "MTU最佳网络吞吐量值= $MTU 已设置完毕"
