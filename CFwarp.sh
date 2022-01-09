@@ -351,6 +351,9 @@ apt update -y;apt install iproute2 openresolv -y;apt install wireguard-tools --n
 fi
 [[ $cpu = AMD64 ]] && wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_amd64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf         
 [[ $cpu = ARM64 ]] && wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_arm64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
+if [[ $main -lt 5 || $minor -lt 6 ]] || [[ $vi =~ lxc|openvz ]]; then
+[[ -e /usr/bin/wireguard-go ]] || wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
+fi
 [[ -z $(lsmod | grep wireguard) ]] && wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 mkdir -p /etc/wireguard/ >/dev/null 2>&1
 echo | wgcf register
@@ -363,8 +366,6 @@ wgcf generate
 yellow "开始自动设置WARP的MTU最佳网络吞吐量值，以优化WARP网络！"
 MTUy=1500
 MTUc=10
-v6=$(curl -s6m5 https://ip.gs -k)
-v4=$(curl -s4m5 https://ip.gs -k)
 if [[ -n $v6 && -z $v4 ]]; then
 ping='ping6'
 IP1='2606:4700:4700::1111'
