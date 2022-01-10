@@ -160,7 +160,7 @@ ABC1=$c2 && ABC2=$c4 && ABC3=$c5 && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV4单栈"
-STOPwgcf && ABC1=$ud4 && ABC2=$c2 && ABC3=$c3 && ABC4=$c5 && WGCFins
+STOPwgcf ; ABC1=$ud4 && ABC2=$c2 && ABC3=$c3 && ABC4=$c5 && WGCFins
 fi
 }
 
@@ -174,7 +174,7 @@ ABC1=$ud6 && ABC2=$c1 && ABC3=$c5 && WGCFins
 fi
 if [[ -n $v6 && -z $v4 ]]; then
 green "vps真IP特征:原生v6单栈vps\n现添加Wgcf-WARP-IPV6单栈 (无IPV4！！！)"
-STOPwgcf && ABC1=$ud6 && ABC2=$c1 && ABC3=$c4 && ABC4=$c6 && ABC5=$nat64 && WGCFins
+STOPwgcf ; ABC1=$ud6 && ABC2=$c1 && ABC3=$c4 && ABC4=$c6 && ABC5=$nat64 && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV6单栈"
@@ -188,15 +188,15 @@ systemctl stop wg-quick@wgcf >/dev/null 2>&1
 ShowWGCF
 if [[ -n $v4 && -n $v6 ]]; then
 green "vps真IP特征:原生v4+v6双栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
-STOPwgcf && ABC1=$ud4ud6 && ABC2=$c5 && WGCFins
+STOPwgcf ; ABC1=$ud4ud6 && ABC2=$c5 && WGCFins
 fi
 if [[ -n $v6 && -z $v4 ]]; then
 green "vps真IP特征:原生v6单栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
-STOPwgcf && ABC1=$ud6 && ABC2=$c4 && ABC3=$c5 && ABC5=$nat64 && WGCFins
+STOPwgcf ; ABC1=$ud6 && ABC2=$c4 && ABC3=$c5 && ABC5=$nat64 && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
-STOPwgcf && ABC1=$ud4 && ABC2=$c3 && ABC3=$c5 && WGCFins
+STOPwgcf ; ABC1=$ud4 && ABC2=$c3 && ABC3=$c5 && WGCFins
 fi
 }
 
