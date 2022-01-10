@@ -344,7 +344,7 @@ ShowWGCF
 if [[ $release = Centos ]]; then
 yum install epel-release -y;yum install iproute wireguard-tools -y
 elif [[ $release = Debian ]]; then
-apt install lsb-release -y;echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
+apt update -y;apt install lsb-release -y;echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
 apt update -y;apt install iproute2 openresolv -y;apt install wireguard-tools --no-install-recommends -y      		
 elif [[ $release = Ubuntu ]]; then
 apt update -y;apt install iproute2 openresolv -y;apt install wireguard-tools --no-install-recommends -y			
