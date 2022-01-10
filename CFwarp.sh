@@ -390,7 +390,7 @@ echo $ABC1 | sh
 echo $ABC2 | sh
 echo $ABC3 | sh
 echo $ABC4 | sh
-if [[ -n $v6 && -z $v4 ]] && [[ $release = Centos ]]; then
+if [[ -n $v6 && -z $v4 ]] && [[ $isp6 = 'ISPpro Internet KG' ]] && [[ $release = Centos ]]; then
 echo $ABC5 | sh
 fi
 cp -f wgcf-profile.conf /etc/wireguard/wgcf.conf >/dev/null 2>&1
