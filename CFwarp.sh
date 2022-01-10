@@ -342,12 +342,17 @@ WGCFins(){
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.conf /etc/wireguard/wgcf-account.toml /etc/wireguard/wgcf+p.log /etc/wireguard/ID /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 ShowWGCF
 if [[ $release = Centos ]]; then
-yum install epel-release -y;yum install iproute wireguard-tools -y
+yum install epel-release -y
+yum install iproute wireguard-tools -y
 elif [[ $release = Debian ]]; then
-apt update -y;apt install lsb-release -y;echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
-apt update -y;apt install iproute2 openresolv -y;apt install wireguard-tools --no-install-recommends -y      		
+apt install lsb-release -y
+echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
+apt update -y
+apt install iproute2 openresolv -y
+apt install wireguard-tools --no-install-recommends -y      		
 elif [[ $release = Ubuntu ]]; then
-apt update -y;apt install iproute2 openresolv -y;apt install wireguard-tools --no-install-recommends -y			
+apt update -y
+apt install iproute2 openresolv -y;apt install wireguard-tools --no-install-recommends -y			
 fi
 [[ $cpu = AMD64 ]] && wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_amd64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf         
 [[ $cpu = ARM64 ]] && wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_arm64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
