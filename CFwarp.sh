@@ -67,14 +67,13 @@ c6="sed -i 's/1.1.1.1/2001:4860:4860::8888,8.8.8.8/g' wgcf-profile.conf"
 yellow " 请稍等3秒……正在扫描vps类型及参数中……"
 
 ShowWGCF(){
-v6=$(curl -s6m5 https://ip.gs -k)
-v4=$(curl -s4m5 https://ip.gs -k)
+v6=$(curl -s6m6 https://ip.gs -k)
+v4=$(curl -s4m6 https://ip.gs -k)
 isp4=`curl -s https://api.ip.sb/geoip/$v4 -k | awk -F "isp" '{print $2}' | awk -F "offset" '{print $1}' | sed "s/[,\":]//g"`
 isp6=`curl -s https://api.ip.sb/geoip/$v6 -k | awk -F "isp" '{print $2}' | awk -F "offset" '{print $1}' | sed "s/[,\":]//g"`
-nat64="echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf"
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
 [[ -e /etc/wireguard/wgcf+p.log ]] && cfplus="WARP+普通账户(有限WARP+流量)，设备名称：$(grep -s 'Device name' /etc/wireguard/wgcf+p.log | awk '{ print $NF }')" || cfplus="WARP+Teams账户(无限WARP+流量)"
-AE="阿联酋（United Arab Emirates）";AU="澳大利亚（Australia）";BG="保加利亚（Bulgaria）";BR="巴西（Brazil）";CA="加拿大（Canada）";CH="瑞士（Switzerland）";CL="智利（Chile)";CN="中国（China）";CO="哥伦比亚（Colombia）";DE="德国（Germany)";ES="西班牙（Spain)";FI="芬兰（Finland）";FR="法国（France）";HK="香港（Hong Kong）";ID="印度尼西亚（Indonesia）";IE="爱尔兰（Ireland）";IL="以色列（Israel）";IN="印度（India）";IT="意大利（Italy）";JP="日本（Japan）";KR="韩国（South Korea）";LU="卢森堡（Luxembourg）";MX="墨西哥（Mexico）";MY="马来西亚（Malaysia）";NL="荷兰（Netherlands）";NZ="新西兰（New Zealand）";PH="菲律宾（Philippines）";RO="罗马尼亚（Romania）";RU="俄罗斯（Russian）";SA="沙特（Saudi Arabia）";SE="瑞典（Sweden）";SG="新加坡（Singapore）";TW="台湾（Taiwan）";UK="英国（United Kingdom）";US="美国（United States）";VN="越南（Vietnam）";ZA="南非（South Africa）"
+AE="阿联酋（United Arab Emirates）";AU="澳大利亚（Australia）";BG="保加利亚（Bulgaria）";BR="巴西（Brazil）";CA="加拿大（Canada）";CH="瑞士（Switzerland）";CL="智利（Chile)";CN="中国（China）";CO="哥伦比亚（Colombia）";DE="德国（Germany)";ES="西班牙（Spain)";FI="芬兰（Finland）";FR="法国（France）";GB="英国（United Kingdom）";HK="香港（Hong Kong）";ID="印度尼西亚（Indonesia）";IE="爱尔兰（Ireland）";IL="以色列（Israel）";IN="印度（India）";IT="意大利（Italy）";JP="日本（Japan）";KR="韩国（South Korea）";LU="卢森堡（Luxembourg）";MX="墨西哥（Mexico）";MY="马来西亚（Malaysia）";NL="荷兰（Netherlands）";NZ="新西兰（New Zealand）";PH="菲律宾（Philippines）";RO="罗马尼亚（Romania）";RU="俄罗斯（Russian）";SA="沙特（Saudi Arabia）";SE="瑞典（Sweden）";SG="新加坡（Singapore）";TW="台湾（Taiwan）";US="美国（United States）";VN="越南（Vietnam）";ZA="南非（South Africa）"
 if [[ -n $v4 ]]; then
 result4=$(curl -4 --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81215567" 2>&1)
 [[ "$result4" == "404" ]] && NF="遗憾哦，当前IP仅解锁奈飞Netflix自制剧..."
@@ -118,7 +117,7 @@ fi
 ShowSOCKS5(){
 if [[ $(systemctl is-active warp-svc) = active ]]; then
 mport=`warp-cli --accept-tos settings 2>/dev/null | grep 'Proxy listening on' | awk -F "127.0.0.1:" '{print $2}'`
-AE="阿联酋（United Arab Emirates）";AU="澳大利亚（Australia）";BG="保加利亚（Bulgaria）";BR="巴西（Brazil）";CA="加拿大（Canada）";CH="瑞士（Switzerland）";CL="智利（Chile)";CN="中国（China）";CO="哥伦比亚（Colombia）";DE="德国（Germany)";ES="西班牙（Spain)";FI="芬兰（Finland）";FR="法国（France）";HK="香港（Hong Kong）";ID="印度尼西亚（Indonesia）";IE="爱尔兰（Ireland）";IL="以色列（Israel）";IN="印度（India）";IT="意大利（Italy）";JP="日本（Japan）";KR="韩国（South Korea）";LU="卢森堡（Luxembourg）";MX="墨西哥（Mexico）";MY="马来西亚（Malaysia）";NL="荷兰（Netherlands）";NZ="新西兰（New Zealand）";PH="菲律宾（Philippines）";RO="罗马尼亚（Romania）";RU="俄罗斯（Russian）";SA="沙特（Saudi Arabia）";SE="瑞典（Sweden）";SG="新加坡（Singapore）";TW="台湾（Taiwan）";UK="英国（United Kingdom）";US="美国（United States）";VN="越南（Vietnam）";ZA="南非（South Africa）"
+AE="阿联酋（United Arab Emirates）";AU="澳大利亚（Australia）";BG="保加利亚（Bulgaria）";BR="巴西（Brazil）";CA="加拿大（Canada）";CH="瑞士（Switzerland）";CL="智利（Chile)";CN="中国（China）";CO="哥伦比亚（Colombia）";DE="德国（Germany)";ES="西班牙（Spain)";FI="芬兰（Finland）";FR="法国（France）";GB="英国（United Kingdom）";HK="香港（Hong Kong）";ID="印度尼西亚（Indonesia）";IE="爱尔兰（Ireland）";IL="以色列（Israel）";IN="印度（India）";IT="意大利（Italy）";JP="日本（Japan）";KR="韩国（South Korea）";LU="卢森堡（Luxembourg）";MX="墨西哥（Mexico）";MY="马来西亚（Malaysia）";NL="荷兰（Netherlands）";NZ="新西兰（New Zealand）";PH="菲律宾（Philippines）";RO="罗马尼亚（Romania）";RU="俄罗斯（Russian）";SA="沙特（Saudi Arabia）";SE="瑞典（Sweden）";SG="新加坡（Singapore）";TW="台湾（Taiwan）";US="美国（United States）";VN="越南（Vietnam）";ZA="南非（South Africa）"
 result=$(curl -sx socks5h://localhost:$mport -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81215567" 2>&1)
 [[ "$result" == "404" ]] && NF="遗憾哦，当前IP仅解锁奈飞Netflix自制剧..."
 [[ "$result" == "403" ]] && NF="死心了，当前IP不支持解锁奈飞Netflix....."
@@ -145,10 +144,9 @@ if [[ $(type -P warp-cli) ]]; then
 red "已安装Socks5-WARP(+)，不支持当前选择的Wgcf-WARP(+)安装方案" && bash CFwarp.sh
 fi
 }
-
 WGCFv4(){
 systemctl stop wg-quick@wgcf >/dev/null 2>&1
-[[ -n $(grep 'DiG 9' /etc/hosts) ]] && echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf || \cp -f /etc/resolv.conf /root/resolv.conf
 ShowWGCF
 if [[ -n $v4 && -n $v6 ]]; then
 green "vps真IP特征:原生v4+v6双栈vps\n现添加Wgcf-WARP-IPV4单栈"
@@ -166,7 +164,7 @@ fi
 
 WGCFv6(){
 systemctl stop wg-quick@wgcf >/dev/null 2>&1
-[[ -n $(grep 'DiG 9' /etc/hosts) ]] && echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf || \cp -f /etc/resolv.conf /root/resolv.conf
 ShowWGCF
 if [[ -n $v4 && -n $v6 ]]; then
 green "vps真IP特征:原生v4+v6双栈vps\n现添加Wgcf-WARP-IPV6单栈"
@@ -174,7 +172,7 @@ ABC1=$ud6 && ABC2=$c1 && ABC3=$c5 && WGCFins
 fi
 if [[ -n $v6 && -z $v4 ]]; then
 green "vps真IP特征:原生v6单栈vps\n现添加Wgcf-WARP-IPV6单栈 (无IPV4！！！)"
-STOPwgcf ; ABC1=$ud6 && ABC2=$c1 && ABC3=$c4 && ABC4=$c6 && ABC5=$nat64 && WGCFins
+STOPwgcf ; ABC1=$ud6 && ABC2=$c1 && ABC3=$c4 && ABC4=$c6 && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV6单栈"
@@ -184,7 +182,7 @@ fi
 
 WGCFv4v6(){
 systemctl stop wg-quick@wgcf >/dev/null 2>&1
-[[ -n $(grep 'DiG 9' /etc/hosts) ]] && echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf || \cp -f /etc/resolv.conf /root/resolv.conf
 ShowWGCF
 if [[ -n $v4 && -n $v6 ]]; then
 green "vps真IP特征:原生v4+v6双栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
@@ -192,7 +190,7 @@ STOPwgcf ; ABC1=$ud4ud6 && ABC2=$c5 && WGCFins
 fi
 if [[ -n $v6 && -z $v4 ]]; then
 green "vps真IP特征:原生v6单栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
-STOPwgcf ; ABC1=$ud6 && ABC2=$c4 && ABC3=$c5 && ABC5=$nat64 && WGCFins
+STOPwgcf ; ABC1=$ud6 && ABC2=$c4 && ABC3=$c5 && WGCFins
 fi
 if [[ -z $v6 && -n $v4 ]]; then
 green "vps真IP特征:原生v4单栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
@@ -227,21 +225,22 @@ white "-------------------------------------------------------------------------
 WGCFmenu;S5menu 
 }
 
-WG(){
-systemctl restart wg-quick@wgcf >/dev/null 2>&1
-ShowWGCF
-[[ $wgcfv4 =~ on|plus || $wgcfv6 =~ on|plus ]]
+checkwgcf(){
+wgcfv6=$(curl -s6m6 https://www.cloudflare.com/cdn-cgi/trace -k | grep warp | cut -d= -f2) 
+wgcfv4=$(curl -s4m6 https://www.cloudflare.com/cdn-cgi/trace -k | grep warp | cut -d= -f2) 
 }
 
 CheckWARP(){
-yellow "请稍等3秒，获取WARP的IP中…………"
+yellow "获取WARP的IP中…………"
 i=0
 wg-quick down wgcf >/dev/null 2>&1
 systemctl start wg-quick@wgcf >/dev/null 2>&1
 while [ $i -le 4 ]; do let i++
-WG && green "恭喜！WARP的IP获取成功！" && break || red "遗憾！WARP的IP获取失败"
+systemctl restart wg-quick@wgcf >/dev/null 2>&1
+checkwgcf
+[[ $wgcfv4 =~ on|plus || $wgcfv6 =~ on|plus ]] && green "恭喜！WARP的IP获取成功！" && break || red "遗憾！WARP的IP获取失败"
 done
-ShowWGCF
+checkwgcf
 if [[ ! $wgcfv4 =~ on|plus && ! $wgcfv6 =~ on|plus ]]; then
 green "失败建议如下："
 [[ $release = Centos && ${vsid} -lt 7 ]] && yellow "当前系统版本号：Centos $vsid \n建议使用 Centos 7 以上系统 " 
@@ -252,6 +251,13 @@ yellow "有疑问请向作者反馈 https://github.com/kkkyg/CFwarp/issues"
 fi
 }
 
+dns(){
+if [[ -n $v6 && -z $v4 ]]; then
+echo -e "nameserver 2001:4860:4860::8888\nnameserver 8.8.8.8" > /etc/resolv.conf
+else
+echo -e "nameserver 8.8.8.8\nnameserver 2001:4860:4860::8888" > /etc/resolv.conf
+fi
+}
 get_char(){
 SAVEDSTTY=`stty -g`
 stty -echo
@@ -315,19 +321,19 @@ ab="1.设置IPV4优先\n2.设置IPV6优先\n3.恢复系统默认优先\n0.返回
 readp "$ab" cd
 case "$cd" in 
 1 )
-grep -qE '^ *precedence ::ffff:0:0/96  100' /etc/gai.conf || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf 2>/dev/null
-sed -i '/^label 2002::\/16   2/d' /etc/gai.conf 2>/dev/null
+[[ -n /etc/gai.conf ]] && grep -qE '^ *precedence ::ffff:0:0/96  100' /etc/gai.conf || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
+sed -i '/^label 2002::\/16   2/d' /etc/gai.conf
 v46=`curl -s https://ip.gs -k`
 [[ $v46 =~ '.' ]] && green "当前VPS本地为IPV4优先：$v46" || green "当前VPS本地为IPV6优先：$v46"
 back;;
 2 )
-grep -qE '^ *label 2002::/16   2' /etc/gai.conf || echo 'label 2002::/16   2' >> /etc/gai.conf 2>/dev/null
-sed -i '/^precedence ::ffff:0:0\/96  100/d' /etc/gai.conf 2>/dev/null
+[[ -n /etc/gai.conf ]] && grep -qE '^ *label 2002::/16   2' /etc/gai.conf || echo 'label 2002::/16   2' >> /etc/gai.conf
+sed -i '/^precedence ::ffff:0:0\/96  100/d' /etc/gai.conf
 v46=`curl -s https://ip.gs -k`
 [[ $v46 =~ '.' ]] && green "当前VPS本地为IPV4优先：$v46" || green "当前VPS本地为IPV6优先：$v46"
 back;;
 3 )
-sed -i '/^precedence ::ffff:0:0\/96  100/d;/^label 2002::\/16   2/d' /etc/gai.conf 2>/dev/null
+sed -i '/^precedence ::ffff:0:0\/96  100/d;/^label 2002::\/16   2/d' /etc/gai.conf
 v46=`curl -s https://ip.gs -k`
 [[ $v46 =~ '.' ]] && green "当前VPS本地为IPV4优先：$v46" || green "当前VPS本地为IPV6优先：$v46"
 back;;
@@ -391,9 +397,7 @@ echo $ABC1 | sh
 echo $ABC2 | sh
 echo $ABC3 | sh
 echo $ABC4 | sh
-if [[ -n $v6 && -z $v4 ]] && [[ $isp6 = 'ISPpro Internet KG' ]] && [[ $release = Centos ]]; then
-echo $ABC5 | sh
-fi
+dns
 cp -f wgcf-profile.conf /etc/wireguard/wgcf.conf >/dev/null 2>&1
 mv -f wgcf-profile.conf /etc/wireguard >/dev/null 2>&1
 mv -f wgcf-account.toml /etc/wireguard >/dev/null 2>&1
@@ -404,12 +408,16 @@ ShowWGCF && WGCFmenu && back
 }
 
 SOCKS5ins(){
-ShowWGCF
 [[ $(warp-cli --accept-tos status 2>/dev/null) =~ 'Connected' ]] && red "当前Socks5-WARP已经在运行中" && bash CFwarp.sh
-[[ -n $v6 && -z $v4 ]] && red "纯IPV6的VPS目前不支持安装Socks5-WARP" && bash CFwarp.sh
-if [[ -n $v4 && -z $v6 ]]; then
-[[ $wgcfv4 =~ on|plus && ! $wgcfv6 =~ on|plus ]] && red "已安装Wgcf-WARP-IPV4(选项2)，不支持安装Socks5-WARP" && bash CFwarp.sh
+systemctl stop wg-quick@wgcf >/dev/null 2>&1
+ShowWGCF
+if [[ -n $v6 && -z $v4 ]]; then
+red "纯IPV6的VPS目前不支持安装Socks5-WARP" && bash CFwarp.sh
+elif [[ -n $v4 && -z $v6 ]]; then
+systemctl start wg-quick@wgcf >/dev/null 2>&1
+[[ $wgcfv4 =~ on|plus && ! $wgcfv6 =~ on|plus ]] && red "纯IPV4的VPS已安装Wgcf-WARP-IPV4(选项2)，不支持安装Socks5-WARP" && bash CFwarp.sh
 fi
+systemctl start wg-quick@wgcf >/dev/null 2>&1
 [[ $wgcfv4 =~ on|plus && $wgcfv6 =~ on|plus ]] && red "已安装Wgcf-WARP-IPV4+IPV6(选项4)，不支持安装Socks5-WARP" && bash CFwarp.sh
 if [[ $release = Centos ]]; then 
 yum -y install epel-release && yum -y install net-tools
@@ -449,7 +457,7 @@ readp "按键许可证秘钥(26个字符):" ID
 wgcf update $SBID > /etc/wireguard/wgcf+p.log 2>&1
 wgcf generate
 sed -i "2s#.*#$(sed -ne 2p wgcf-profile.conf)#;4s#.*#$(sed -ne 4p wgcf-profile.conf)#" wgcf.conf
-CheckWARP
+checkwgcf
 [[ $wgcfv4 = plus || $wgcfv6 = plus ]] && green "已升级为Wgcf-WARP+账户\nWgcf-WARP+账户设备名称：$(grep -s 'Device name' /etc/wireguard/wgcf+p.log | awk '{ print $NF }')\nWgcf-WARP+账户剩余流量：$(grep -s Quota /etc/wireguard/wgcf+p.log | awk '{ print $(NF-1), $NF }')"
 ShowWGCF && WGCFmenu && back;;
 2 )
@@ -490,7 +498,7 @@ readp "请复制IPV6的Address：" Add
 if [[ -n $Key && -n $Add ]]; then
 sed -i "s#PrivateKey.*#PrivateKey = $Key#g;s#Address.*128#Address = $Add/128#g" /etc/wireguard/wgcf.conf
 systemctl restart wg-quick@wgcf >/dev/null 2>&1
-ShowWGCF
+checkwgcf
 if [[ $wgcfv4 = plus || $wgcfv6 = plus ]]; then
 rm -rf /etc/wireguard/wgcf+p.log && green "Wgcf-WARP+Teams账户已生效" && ShowWGCF && WGCFmenu && back
 else
@@ -578,35 +586,35 @@ warp-cli --accept-tos register >/dev/null 2>&1 && sleep 2
 }
 WGCFV4(){
 while true; do
-[[ "$result4" == "200" ]] && green "目前wgcf-ipv4的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv4的IP不支持奈飞，刷新wgcf-ipv4的IP中……" && sleep 15)
+[[ "$result4" == "200" ]] && green "目前wgcf-ipv4的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv4的IP不支持奈飞，刷新wgcf-ipv4的IP中……" && sleep 30)
 done
 }
 WGCFV6(){
 while true; do
-[[ "$result6" == "200" ]] && green "目前wgcf-ipv6的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv6的IP不支持奈飞，刷新wgcf-ipv6的IP中……" && sleep 15)
+[[ "$result6" == "200" ]] && green "目前wgcf-ipv6的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv6的IP不支持奈飞，刷新wgcf-ipv6的IP中……" && sleep 30)
 done
 }
 SOCKS5warp(){
 while true; do
-[[ "$result" == "200" ]] && green "目前socks5的IP支持奈飞，停止刷新" && sleep 30 || (s5c && yellow "目前socks5的IP不支持奈飞，刷新socks5的IP中……" && sleep 15)
+[[ "$result" == "200" ]] && green "目前socks5的IP支持奈飞，停止刷新" && sleep 30 || (s5c && yellow "目前socks5的IP不支持奈飞，刷新socks5的IP中……" && sleep 30)
 done
 }
 SOCKS5wgcf4(){
 while true; do
-[[ "$result" == "200" ]] && green "目前socks5的IP支持奈飞，停止刷新" && sleep 30 || (s5c && yellow "目前socks5的IP不支持奈飞，刷新socks5的IP中……" && sleep 15)
-[[ "$result4" == "200" ]] && green "目前wgcf-ipv4的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv4的IP不支持奈飞，刷新wgcf-ipv4的IP中……" && sleep 15)
+[[ "$result" == "200" ]] && green "目前socks5的IP支持奈飞，停止刷新" && sleep 30 || (s5c && yellow "目前socks5的IP不支持奈飞，刷新socks5的IP中……" && sleep 30)
+[[ "$result4" == "200" ]] && green "目前wgcf-ipv4的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv4的IP不支持奈飞，刷新wgcf-ipv4的IP中……" && sleep 30)
 done
 }
 SOCKS5wgcf6(){
 while true; do
-[[ "$result" == "200" ]] && green "目前socks5的IP支持奈飞，停止刷新" && sleep 30 || (s5c && yellow "目前socks5的IP不支持奈飞，刷新socks5的IP中……" && sleep 15)
-[[ "$result6" == "200" ]] && green "目前wgcf-ipv6的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv6的IP不支持奈飞，刷新wgcf-ipv6的IP中……" && sleep 15)
+[[ "$result" == "200" ]] && green "目前socks5的IP支持奈飞，停止刷新" && sleep 30 || (s5c && yellow "目前socks5的IP不支持奈飞，刷新socks5的IP中……" && sleep 30)
+[[ "$result6" == "200" ]] && green "目前wgcf-ipv6的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv6的IP不支持奈飞，刷新wgcf-ipv6的IP中……" && sleep 30)
 done
 }
 WGCFV4V6(){
 while true; do
-[[ "$result4" == "200" ]] && green "目前wgcf-ipv4的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv4的IP不支持奈飞，刷新wgcf-ipv4的IP中……" && sleep 15)
-[[ "$result6" == "200" ]] && green "目前wgcf-ipv6的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv6的IP不支持奈飞，刷新wgcf-ipv6的IP中……" && sleep 15)
+[[ "$result4" == "200" ]] && green "目前wgcf-ipv4的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv4的IP不支持奈飞，刷新wgcf-ipv4的IP中……" && sleep 30)
+[[ "$result6" == "200" ]] && green "目前wgcf-ipv6的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv6的IP不支持奈飞，刷新wgcf-ipv6的IP中……" && sleep 30)
 done
 }
 [[ $(systemctl is-active warp-svc) = active && $wgcfv6 =~ on|plus ]] && green "双栈WARP循环执行：刷socks5与wgcf-ipv6的IP" && SOCKS5wgcf6
@@ -625,9 +633,9 @@ case "$cd" in
 1 )
 [[ ! $(type -P screen) ]] && yellow "检测到screen未安装，升级安装中" && $yumapt install screen
 AutoNF
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit >/dev/null 2>&1 && screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1
+[[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
 green "设置screen窗口名称'aw'，离线后台自动刷奈飞IP" && sleep 2
-grep -qE "^ *@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" /etc/crontab || echo "@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" >> /etc/crontab >/dev/null 2>&1
+grep -qE "^ *@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" /etc/crontab || echo "@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" >> /etc/crontab 2>/dev/null
 green "添加VPS重启后自动刷奈飞IP功能，重启VPS后自动生效"
 back;;
 2 )
@@ -653,19 +661,20 @@ readp "$ab" cd
 case "$cd" in  
 1 )
 [[ ! $(type -P wg-quick) ]] && red "WARP(+)未安装，无法启动或关闭，建议重新安装WARP(+)" && bash CFwarp.sh
-ShowWGCF
+checkwgcf
 if [[ $wgcfv4 =~ on|plus || $wgcfv6 =~ on|plus ]]; then
 yellow "当前WARP(+)：已运行中状态，现执行:临时关闭……"
 wg-quick down wgcf >/dev/null 2>&1
 systemctl disable wg-quick@wgcf >/dev/null 2>&1
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit >/dev/null 2>&1 && screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1
-ShowWGCF
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf
+[[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
+checkwgcf
 [[ $wgcfv6 = off || $wgcfv4 = off ]] && green "关闭WARP(+)成功" || red "关闭WARP(+)失败"
 elif [[ $wgcfv6 = off || $wgcfv4 = off ]]; then
 yellow "当前WARP(+)：临时关闭状态，现执行:恢复运行……"
-systemctl enable wg-quick@wgcf >/dev/null 2>&1
+dns && systemctl enable wg-quick@wgcf >/dev/null 2>&1
 CheckWARP
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit >/dev/null 2>&1 && screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1
+[[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
 fi
 ShowWGCF && WGCFmenu && back;;
 2 )
@@ -673,13 +682,13 @@ ShowWGCF && WGCFmenu && back;;
 if [[ $(warp-cli --accept-tos status) =~ 'Connected' ]]; then
 yellow "当前WARP(+)：已开启状态，现执行：临时关闭……" && sleep 1
 warp-cli --accept-tos disable-always-on >/dev/null 2>&1
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit >/dev/null 2>&1 && screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1
+[[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
 [[ $(warp-cli --accept-tos status) =~ 'Disconnected' ]] && green "临时关闭WARP(+)成功" || red "临时关闭WARP(+)失败"
 elif [[ $(warp-cli --accept-tos status) =~ 'Disconnected' ]]; then
 yellow "当前WARP(+)：临时关闭状态，现执行：恢复运行……" && sleep 1
 warp-cli --accept-tos enable-always-on >/dev/null 2>&1
 [[ $(warp-cli --accept-tos status) =~ 'Connected' ]] && green "恢复开启WARP(+)成功" || red "临时开启WARP(+)失败"
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit >/dev/null 2>&1 && screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1
+[[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
 fi
 ShowSOCKS5 && S5menu && back;;
 0 ) WARPOC
@@ -691,6 +700,7 @@ cwg(){
 wg-quick down wgcf >/dev/null 2>&1
 systemctl disable wg-quick@wgcf >/dev/null 2>&1
 $yumapt autoremove wireguard-tools
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf
 }
 cso(){
 warp-cli --accept-tos disconnect >/dev/null 2>&1
@@ -698,7 +708,7 @@ warp-cli --accept-tos disable-always-on >/dev/null 2>&1
 warp-cli --accept-tos delete >/dev/null 2>&1
 [[ $release = Centos ]] && (yum autoremove cloudflare-warp -y) || (apt purge cloudflare-warp -y && rm -f /etc/apt/sources.list.d/cloudflare-client.list)
 }
-wj="rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.conf /etc/wireguard/wgcf-account.toml /etc/wireguard/wgcf+p.log /etc/wireguard/ID /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf"
+wj="rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.conf /etc/wireguard/wgcf-account.toml /etc/wireguard/wgcf+p.log /etc/wireguard/ID /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf resolv.conf"
 ab="1.仅卸载Wgcf-WARP(+)\n2.仅卸载Socks5-WARP(+)\n3.一锅端：彻底卸载并清除所有WARP及脚本文件\n0.返回上一层\n 请选择："
 readp "$ab" cd
 case "$cd" in     
