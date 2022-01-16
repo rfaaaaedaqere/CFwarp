@@ -146,7 +146,7 @@ fi
 }
 WGCFv4(){
 systemctl stop wg-quick@wgcf >/dev/null 2>&1
-[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf || \cp -f /etc/resolv.conf /root/resolv.conf
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) && -e /root/resolv.conf ]] && cat /root/resolv.conf > /etc/resolv.conf || \cp -f /etc/resolv.conf /root/resolv.conf
 ShowWGCF
 if [[ -n $v4 && -n $v6 ]]; then
 green "vps真IP特征:原生v4+v6双栈vps\n现添加Wgcf-WARP-IPV4单栈"
@@ -164,7 +164,7 @@ fi
 
 WGCFv6(){
 systemctl stop wg-quick@wgcf >/dev/null 2>&1
-[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf || \cp -f /etc/resolv.conf /root/resolv.conf
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) && -e /root/resolv.conf ]] && cat /root/resolv.conf > /etc/resolv.conf || \cp -f /etc/resolv.conf /root/resolv.conf
 ShowWGCF
 if [[ -n $v4 && -n $v6 ]]; then
 green "vps真IP特征:原生v4+v6双栈vps\n现添加Wgcf-WARP-IPV6单栈"
@@ -182,7 +182,7 @@ fi
 
 WGCFv4v6(){
 systemctl stop wg-quick@wgcf >/dev/null 2>&1
-[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf || \cp -f /etc/resolv.conf /root/resolv.conf
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) && -e /root/resolv.conf ]] && cat /root/resolv.conf > /etc/resolv.conf || \cp -f /etc/resolv.conf /root/resolv.conf
 ShowWGCF
 if [[ -n $v4 && -n $v6 ]]; then
 green "vps真IP特征:原生v4+v6双栈vps\n现添加Wgcf-WARP-IPV4+IPV6双栈"
@@ -242,7 +242,7 @@ checkwgcf
 done
 checkwgcf
 if [[ ! $wgcfv4 =~ on|plus && ! $wgcfv6 =~ on|plus ]]; then
-[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) && -e /root/resolv.conf ]] && cat /root/resolv.conf > /etc/resolv.conf
 green "失败建议如下："
 [[ $release = Centos && ${vsid} -lt 7 ]] && yellow "当前系统版本号：Centos $vsid \n建议使用 Centos 7 以上系统 " 
 [[ $release = Ubuntu && ${vsid} -lt 18 ]] && yellow "当前系统版本号：Ubuntu $vsid \n建议使用 Ubuntu 18 以上系统 " 
@@ -638,7 +638,6 @@ AutoNF
 [[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
 green "设置screen窗口名称'aw'，离线后台自动刷奈飞IP" && sleep 2
 grep -qE "^ *@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" /etc/crontab || echo "@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" >> /etc/crontab
-crontab /etc/crontab
 green "添加VPS重启后自动刷奈飞IP功能，重启VPS后自动生效"
 back;;
 2 )
@@ -669,7 +668,7 @@ if [[ $wgcfv4 =~ on|plus || $wgcfv6 =~ on|plus ]]; then
 yellow "当前WARP(+)：已运行中状态，现执行:临时关闭……"
 wg-quick down wgcf >/dev/null 2>&1
 systemctl disable wg-quick@wgcf >/dev/null 2>&1
-[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) && -e /root/resolv.conf ]] && cat /root/resolv.conf > /etc/resolv.conf
 [[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
 checkwgcf
 [[ $wgcfv6 = off || $wgcfv4 = off ]] && green "关闭WARP(+)成功" || red "关闭WARP(+)失败"
@@ -703,7 +702,7 @@ cwg(){
 wg-quick down wgcf >/dev/null 2>&1
 systemctl disable wg-quick@wgcf >/dev/null 2>&1
 $yumapt autoremove wireguard-tools
-[[ -n $(grep 8.8.8.8 /etc/resolv.conf) ]] && cat /root/resolv.conf > /etc/resolv.conf
+[[ -n $(grep 8.8.8.8 /etc/resolv.conf) && -e /root/resolv.conf ]] && cat /root/resolv.conf > /etc/resolv.conf
 }
 cso(){
 warp-cli --accept-tos disconnect >/dev/null 2>&1
