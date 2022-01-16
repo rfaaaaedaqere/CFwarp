@@ -249,6 +249,7 @@ green "失败建议如下："
 [[ $release = Debian && ${vsid} -lt 10 ]] && yellow "当前系统版本号：Debian $vsid \n建议使用 Debian 10 以上系统 "
 yellow "强烈建议使用官方源升级系统及内核加速！如已使用第三方源及内核加速，请务必更新到最新版，或重置为官方源"
 yellow "有疑问请向作者反馈 https://github.com/kkkyg/CFwarp/issues"
+rm -rf resolv.conf
 fi
 }
 
