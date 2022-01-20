@@ -571,77 +571,24 @@ ShowSOCKS5 && S5menu && back;;
 esac
 }
 
-AutoNF(){
-cat > NFC.sh << 'END_SH'
-green(){ echo -e "\033[32m\033[01m$1\033[0m";}
-yellow(){ echo -e "\033[33m\033[01m$1\033[0m";}
-wgcfv4=$(curl -s4m6 https://www.cloudflare.com/cdn-cgi/trace -k | grep warp | cut -d= -f2) 
-wgcfv6=$(curl -s6m6 https://www.cloudflare.com/cdn-cgi/trace -k | grep warp | cut -d= -f2)
-UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36"
-result4=$(curl -4 --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81215567" 2>&1)
-result6=$(curl -6 --user-agent "${UA_Browser}" -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81215567" 2>&1)
-mport=`warp-cli --accept-tos settings 2>/dev/null | grep 'Proxy listening on' | awk -F "127.0.0.1:" '{print $2}'`
-result=$(curl -sx socks5h://localhost:$mport -fsL --write-out %{http_code} --output /dev/null --max-time 10 "https://www.netflix.com/title/81215567" 2>&1) 
-s5c(){
-warp-cli --accept-tos register >/dev/null 2>&1 && sleep 2
-[[ -e /etc/wireguard/ID ]] && warp-cli --accept-tos set-license $(cat /etc/wireguard/ID) >/dev/null 2>&1
-}
-WGCFV4(){
-while true; do
-[[ "$result4" == "200" ]] && green "目前wgcf-ipv4的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv4的IP不支持奈飞，刷新wgcf-ipv4的IP中……" && sleep 30)
-done
-}
-WGCFV6(){
-while true; do
-[[ "$result6" == "200" ]] && green "目前wgcf-ipv6的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv6的IP不支持奈飞，刷新wgcf-ipv6的IP中……" && sleep 30)
-done
-}
-SOCKS5warp(){
-while true; do
-[[ "$result" == "200" ]] && green "目前socks5的IP支持奈飞，停止刷新" && sleep 30 || (s5c && yellow "目前socks5的IP不支持奈飞，刷新socks5的IP中……" && sleep 30)
-done
-}
-SOCKS5wgcf4(){
-while true; do
-[[ "$result" == "200" ]] && green "目前socks5的IP支持奈飞，停止刷新" && sleep 30 || (s5c && yellow "目前socks5的IP不支持奈飞，刷新socks5的IP中……" && sleep 30)
-[[ "$result4" == "200" ]] && green "目前wgcf-ipv4的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv4的IP不支持奈飞，刷新wgcf-ipv4的IP中……" && sleep 30)
-done
-}
-SOCKS5wgcf6(){
-while true; do
-[[ "$result" == "200" ]] && green "目前socks5的IP支持奈飞，停止刷新" && sleep 30 || (s5c && yellow "目前socks5的IP不支持奈飞，刷新socks5的IP中……" && sleep 30)
-[[ "$result6" == "200" ]] && green "目前wgcf-ipv6的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv6的IP不支持奈飞，刷新wgcf-ipv6的IP中……" && sleep 30)
-done
-}
-WGCFV4V6(){
-while true; do
-[[ "$result4" == "200" ]] && green "目前wgcf-ipv4的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv4的IP不支持奈飞，刷新wgcf-ipv4的IP中……" && sleep 30)
-[[ "$result6" == "200" ]] && green "目前wgcf-ipv6的IP支持奈飞，停止刷新" && sleep 30 || (systemctl restart wg-quick@wgcf && yellow "目前wgcf-ipv6的IP不支持奈飞，刷新wgcf-ipv6的IP中……" && sleep 30)
-done
-}
-[[ $(systemctl is-active warp-svc) = active && $wgcfv6 =~ on|plus ]] && green "双栈WARP循环执行：刷socks5与wgcf-ipv6的IP" && SOCKS5wgcf6
-[[ $(systemctl is-active warp-svc) = active && $wgcfv4 =~ on|plus ]] && green "双栈WARP循环执行：刷socks5与wgcf-ipv4的IP" && SOCKS5wgcf4
-[[ $(systemctl is-active warp-svc) = active && ! $(type -P wg-quick) ]] && green "单栈WARP循环执行：刷socks5的IP" && SOCKS5warp
-[[ $wgcfv6 =~ on|plus && $wgcfv4 = off ]] && green "单栈WARP循环执行：刷wgcf-ipv6的IP" && WGCFV6
-[[ $wgcfv6 =~ on|plus && $wgcfv4 =~ on|plus ]] && green "双栈WARP循环执行：仅刷wgcf-ipv4" && WGCFV4
-[[ $wgcfv6 = off && $wgcfv4 =~ on|plus ]] && green "单栈WARP循环执行：刷wgcf-ipv4的IP" && WGCFV4
-END_SH
-}
-
 Rewarp(){
 ab="1.启用：离线后台+重启VPS自动刷NF功能\n2.关闭：重启VPS自动刷奈飞IP功能\n（离线Screen窗口请在Screen管理设置中删除）\n0.返回上一层\n 请选择："
 readp "$ab" cd
 case "$cd" in  
 1 )
 [[ ! $(type -P screen) ]] && yellow "检测到screen未安装，升级安装中" && $yumapt install screen
-AutoNF
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
+wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/Netflix-WARP/main/check.sh
+read -p "已是奈飞IP重新检测间隔时间（回车默认45秒）,请输入间隔时间（秒）:" stop
+[[ -n $stop ]] && sed -i "s/45/$stop/g" check.sh || green "默认45秒"
+read -p "非奈飞IP继续检测间隔时间（回车默认30秒）,请输入间隔时间（秒）:" goon
+[[ -n $goon ]] && sed -i "s/30/$goon/g" check.sh || green "默认30秒"
+[[ -e /root/check.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/check.sh'
 green "设置screen窗口名称'aw'，离线后台自动刷奈飞IP" && sleep 2
-grep -qE "^ *@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" /etc/crontab || echo "@reboot root screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1" >> /etc/crontab
-green "添加VPS重启后自动刷奈飞IP功能，重启VPS后自动生效(目前不支持纯IPV6的VPS)"
+grep -qE "^ *@reboot root screen -dmS aw bash -c '/bin/bash /root/check.sh' >/dev/null 2>&1" /etc/crontab || echo "@reboot root screen -dmS aw bash -c '/bin/bash /root/check.sh' >/dev/null 2>&1" >> /etc/crontab
+green "添加VPS重启后自动刷奈飞IP功能，重启VPS后自动生效（目前不支持纯IPV6的VPS）"
 back;;
 2 )
-sed -i '/NFC.sh/d' /etc/crontab >/dev/null 2>&1 && green "卸载完成";;
+sed -i '/check.sh/d' /etc/crontab >/dev/null 2>&1 && green "卸载完成";;
 0 ) REnfwarp
 esac
 }
