@@ -346,7 +346,7 @@ esac
 }
 
 WGCFins(){
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit >/dev/null 2>&1
+[[ -e /root/check.sh ]] && screen -S aw -X quit >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.conf /etc/wireguard/wgcf-account.toml /etc/wireguard/wgcf+p.log /etc/wireguard/ID /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 ShowWGCF
 if [[ $release = Centos ]]; then
@@ -405,7 +405,7 @@ mv -f wgcf-profile.conf /etc/wireguard >/dev/null 2>&1
 mv -f wgcf-account.toml /etc/wireguard >/dev/null 2>&1
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
 CheckWARP
-[[ -e /root/NFC.sh ]] && screen -dmS aw bash -c '/bin/bash /root/NFC.sh' >/dev/null 2>&1
+[[ -e /root/check.sh ]] && screen -dmS aw bash -c '/bin/bash /root/check.sh' >/dev/null 2>&1
 ShowWGCF && WGCFmenu && back
 }
 
@@ -616,14 +616,14 @@ yellow "当前WARP(+)：已运行中状态，现执行:临时关闭……"
 wg-quick down wgcf >/dev/null 2>&1
 systemctl disable wg-quick@wgcf >/dev/null 2>&1
 [[ -n $(grep 8.8.8.8 /etc/resolv.conf) && -e /root/resolv.conf ]] && cat /root/resolv.conf > /etc/resolv.conf
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
+[[ -e /root/check.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/check.sh'
 checkwgcf
 [[ $wgcfv6 = off || $wgcfv4 = off ]] && green "关闭WARP(+)成功" || red "关闭WARP(+)失败"
 elif [[ $wgcfv6 = off || $wgcfv4 = off ]]; then
 yellow "当前WARP(+)：临时关闭状态，现执行:恢复运行……"
 dns && systemctl enable wg-quick@wgcf >/dev/null 2>&1
 CheckWARP
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
+[[ -e /root/check.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/check.sh'
 fi
 ShowWGCF && WGCFmenu && back;;
 2 )
@@ -631,13 +631,13 @@ ShowWGCF && WGCFmenu && back;;
 if [[ $(warp-cli --accept-tos status) =~ 'Connected' ]]; then
 yellow "当前WARP(+)：已开启状态，现执行：临时关闭……" && sleep 1
 warp-cli --accept-tos disable-always-on >/dev/null 2>&1
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
+[[ -e /root/check.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/check.sh'
 [[ $(warp-cli --accept-tos status) =~ 'Disconnected' ]] && green "临时关闭WARP(+)成功" || red "临时关闭WARP(+)失败"
 elif [[ $(warp-cli --accept-tos status) =~ 'Disconnected' ]]; then
 yellow "当前WARP(+)：临时关闭状态，现执行：恢复运行……" && sleep 1
 warp-cli --accept-tos enable-always-on >/dev/null 2>&1
 [[ $(warp-cli --accept-tos status) =~ 'Connected' ]] && green "恢复开启WARP(+)成功" || red "临时开启WARP(+)失败"
-[[ -e /root/NFC.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/NFC.sh'
+[[ -e /root/check.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/check.sh'
 fi
 ShowSOCKS5 && S5menu && back;;
 0 ) WARPOC
@@ -663,7 +663,7 @@ readp "$ab" cd
 case "$cd" in     
 1 ) [[ $(type -P wg-quick) ]] && (cwg ; $wj ; green "Wgcf-WARP(+)卸载完成" && ShowWGCF && WGCFmenu && back) || (yellow "并未安装Wgcf-WARP(+)，无法卸载" && bash CFwarp.sh);;
 2 ) [[ $(type -P warp-cli) ]] && (cso ; green "Socks5-WARP(+)卸载完成" && ShowSOCKS5 && S5menu && back) || (yellow "并未安装Socks5-WARP(+)，无法卸载" && bash CFwarp.sh);;
-3 ) [[ ! $(type -P wg-quick) && ! $(type -P warp-cli) ]] && (red "并没有安装任何的WARP功能，无法卸载" && CFwarp.sh) || (cwg ; cso ; $wj ; rm -rf CFwarp.sh NFC.sh ; green "WARP已全部卸载完成" && ShowSOCKS5 && ShowWGCF && WGCFmenu && S5menu && back);;
+3 ) [[ ! $(type -P wg-quick) && ! $(type -P warp-cli) ]] && (red "并没有安装任何的WARP功能，无法卸载" && CFwarp.sh) || (cwg ; cso ; $wj ; rm -rf CFwarp.sh check.sh ; green "WARP已全部卸载完成" && ShowSOCKS5 && ShowWGCF && WGCFmenu && S5menu && back);;
 0 ) WARPOC
 esac
 }
