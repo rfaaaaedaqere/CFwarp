@@ -346,7 +346,7 @@ esac
 }
 
 WGCFins(){
-[[ -e /root/check.sh ]] && screen -S aw -X quit >/dev/null 2>&1
+[[ -e /root/check.sh ]] && screen -S aw -X quit
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.conf /etc/wireguard/wgcf-account.toml /etc/wireguard/wgcf+p.log /etc/wireguard/ID /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 ShowWGCF
 if [[ $release = Centos ]]; then
