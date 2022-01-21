@@ -256,8 +256,6 @@ fi
 dns(){
 if [[ -n $v6 && -z $v4 ]]; then
 echo -e "nameserver 2001:4860:4860::8888\nnameserver 8.8.8.8" > /etc/resolv.conf
-else
-echo -e "nameserver 8.8.8.8\nnameserver 2001:4860:4860::8888" > /etc/resolv.conf
 fi
 }
 get_char(){
