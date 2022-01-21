@@ -48,10 +48,6 @@ bbr="openvz版bbr-plus"
 else
 bbr="暂不支持显示"
 fi
-if [[ $vi = openvz ]]; then
-TUN=$(cat /dev/net/tun 2>&1)
-[[ ${TUN} != "cat: /dev/net/tun: File descriptor in bad state" ]] && red "检测完毕：未开启TUN，不支持安装WARP(+)，请与VPS厂商沟通或后台设置以开启TUN" && exit 0
-fi
 [[ $(type -P yum) ]] && yumapt='yum -y' || yumapt='apt -y'
 [[ $(type -P curl) ]] || (yellow "检测到curl未安装，升级安装中" && $yumapt update;$yumapt install curl)
  
@@ -247,6 +243,10 @@ green "失败建议如下："
 [[ $release = Centos && ${vsid} -lt 7 ]] && yellow "当前系统版本号：Centos $vsid \n建议使用 Centos 7 以上系统 " 
 [[ $release = Ubuntu && ${vsid} -lt 18 ]] && yellow "当前系统版本号：Ubuntu $vsid \n建议使用 Ubuntu 18 以上系统 " 
 [[ $release = Debian && ${vsid} -lt 10 ]] && yellow "当前系统版本号：Debian $vsid \n建议使用 Debian 10 以上系统 "
+if [[ $vi = openvz ]]; then
+TUN=$(cat /dev/net/tun 2>&1)
+[[ ${TUN} != "cat: /dev/net/tun: File descriptor in bad state" ]] && red "检测完毕：未开启TUN，不支持安装WARP(+)，请与VPS厂商沟通或后台设置以开启TUN"
+fi
 yellow "强烈建议使用官方源升级系统及内核加速！如已使用第三方源及内核加速，请务必更新到最新版，或重置为官方源"
 yellow "有疑问请向作者反馈 https://github.com/kkkyg/CFwarp/issues"
 rm -rf resolv.conf
@@ -405,7 +405,7 @@ mv -f wgcf-profile.conf /etc/wireguard >/dev/null 2>&1
 mv -f wgcf-account.toml /etc/wireguard >/dev/null 2>&1
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
 CheckWARP
-[[ -e /root/check.sh ]] && screen -dmS aw bash -c '/bin/bash /root/check.sh' >/dev/null 2>&1
+[[ -e /root/check.sh ]] && screen -dmS aw bash -c '/bin/bash /root/check.sh' 
 ShowWGCF && WGCFmenu && back
 }
 
