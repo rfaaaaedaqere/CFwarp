@@ -578,9 +578,9 @@ case "$cd" in
 1 )
 [[ ! $(type -P screen) ]] && yellow "检测到screen未安装，升级安装中" && $yumapt install screen
 wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/Netflix-WARP/main/check.sh
-read -p "已是奈飞IP重新检测间隔时间（回车默认45秒）,请输入间隔时间（秒）:" stop
+read -p "已是奈飞IP重新检测间隔时间（回车默认45秒：45s）,请输入间隔时间（数字+s）:" stop
 [[ -n $stop ]] && sed -i "s/45/$stop/g" check.sh || green "默认45秒"
-read -p "非奈飞IP继续检测间隔时间（回车默认30秒）,请输入间隔时间（秒）:" goon
+read -p "非奈飞IP继续检测间隔时间（回车默认30秒：30s）,请输入间隔时间（数字+s）:" goon
 [[ -n $goon ]] && sed -i "s/30/$goon/g" check.sh || green "默认30秒"
 [[ -e /root/check.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/check.sh'
 green "设置screen窗口名称'aw'，离线后台自动刷奈飞IP" && sleep 2
