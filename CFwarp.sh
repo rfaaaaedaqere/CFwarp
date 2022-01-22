@@ -578,6 +578,8 @@ case "$cd" in
 1 )
 [[ ! $(type -P screen) ]] && yellow "检测到screen未安装，升级安装中" && $yumapt install screen
 wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/Netflix-WARP/main/check.sh
+read -p "输入国家区域简称（例：新加坡，输入大写SG;美国，输入大写US）:" gj
+[[ -n $gj ]] && sed -i "s/dd/$gj/g" check.sh || (sed -i "s/dd/\$region/g" check.sh && green "为WARP默认分配的国家区域")
 read -p "已是奈飞IP重新检测间隔时间（回车默认45秒）,请输入间隔时间（例：50秒，输入50）:" stop
 [[ -n $stop ]] && sed -i "s/45s/${stop}s/g" check.sh || green "默认45秒"
 read -p "非奈飞IP继续检测间隔时间（回车默认30秒）,请输入间隔时间（例：50秒，输入50）:" goon
@@ -682,7 +684,7 @@ start_menu(){
 ShowWGCF;ShowSOCKS5
 clear
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-bblue " WARP-WGCF/SOCKS5安装脚本：2022.1.15更新 Beta 2 版本"
+bblue " WARP-WGCF/SOCKS5安装脚本：2022.1.22更新 Beta 3 版本"
 yellow " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃"    
 yellow " 切记：进入脚本快捷方式 bash CFwarp.sh "    
 white " ==================一、VPS相关调整选择（更新中）=========================================="
