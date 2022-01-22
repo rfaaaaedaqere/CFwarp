@@ -39,7 +39,10 @@ op=`sys`
 version=`uname -r | awk -F "-" '{print $1}'`
 main=`uname  -r | awk -F . '{print $1 }'`
 minor=`uname -r | awk -F . '{print $2}'`
-uname -m | grep -q -E -i "aarch" && cpu=ARM64 || cpu=AMD64
+bit=`uname -m`
+[[ $bit = x86_64 ]] && cpu=AMD64
+[[ $bit = aarch64 ]] && cpu=ARM64
+[[ $bit = s390x ]] && cpu=s390x
 vi=`systemd-detect-virt`
 if [[ -n $(sysctl net.ipv4.tcp_congestion_control 2>/dev/null | awk -F ' ' '{print $3}') ]]; then
 bbr=`sysctl net.ipv4.tcp_congestion_control | awk -F ' ' '{print $3}'`
@@ -249,7 +252,7 @@ TUN=$(cat /dev/net/tun 2>&1)
 fi
 yellow "强烈建议使用官方源升级系统及内核加速！如已使用第三方源及内核加速，请务必更新到最新版，或重置为官方源"
 yellow "有疑问请向作者反馈 https://github.com/kkkyg/CFwarp/issues"
-rm -rf resolv.conf
+rm -rf resolv.conf && exit 0
 fi
 }
 
@@ -360,6 +363,7 @@ apt update -y;apt install iproute2 openresolv dnsutils iptables -y;apt install w
 fi
 [[ $cpu = AMD64 ]] && wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_amd64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf         
 [[ $cpu = ARM64 ]] && wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_arm64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
+[[ $cpu = s390x ]] && wget -N https://github.com/ViRb3/wgcf/releases/download/v2.2.11/wgcf_2.2.11_linux_s390x -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
 if [[ $main -lt 5 || $minor -lt 6 ]] || [[ $vi =~ lxc|openvz ]]; then
 [[ -e /usr/bin/wireguard-go ]] || wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
