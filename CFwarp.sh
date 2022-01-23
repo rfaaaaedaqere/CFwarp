@@ -582,11 +582,11 @@ case "$cd" in
 1 )
 [[ ! $(type -P screen) ]] && yellow "检测到screen未安装，升级安装中" && $yumapt install screen
 wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/Netflix-WARP/main/check.sh
-read -p "输入国家区域简称（例：新加坡，输入大写SG;美国，输入大写US）:" gj
-[[ -n $gj ]] && sed -i "s/dd/$gj/g" check.sh || (sed -i "s/dd/\$region/g" check.sh && green "为WARP默认分配的国家区域")
-read -p "已是奈飞IP重新检测间隔时间（回车默认45秒）,请输入间隔时间（例：50秒，输入50）:" stop
+readp "输入国家区域简称（例：新加坡，输入大写SG;美国，输入大写US）:" gj
+[[ -n $gj ]] && sed -i "s/dd/$gj/g" check.sh || (sed -i "s/dd/\$region/g" check.sh && green "当前设置WARP默认随机分配的国家区域: $g4 ")
+readp "已是奈飞IP时，重新检测间隔时间（回车默认45秒）,请输入间隔时间（例：50秒，输入50）:" stop
 [[ -n $stop ]] && sed -i "s/45s/${stop}s/g" check.sh || green "默认45秒"
-read -p "非奈飞IP继续检测间隔时间（回车默认30秒）,请输入间隔时间（例：50秒，输入50）:" goon
+readp "非奈飞IP时，继续检测间隔时间（回车默认30秒）,请输入间隔时间（例：50秒，输入50）:" goon
 [[ -n $goon ]] && sed -i "s/30s/${goon}s/g" check.sh || green "默认30秒"
 [[ -e /root/check.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/check.sh'
 green "设置screen窗口名称'aw'，离线后台自动刷奈飞IP" && sleep 2
