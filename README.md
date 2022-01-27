@@ -23,11 +23,6 @@ wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp.sh && bash CFwarp.sh
 
 待更新 
 
-EUserv德鸡DIG9用户请先执行
-
-```
-echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
-```
 ---------------------------------------------------------------------------------------------
 
 加入无限刷WARP+流量功能（方法如下）
