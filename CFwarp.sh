@@ -290,64 +290,6 @@ up4(){
 wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
 }
 
-Other(){
-ab="1.VPS一键ROOT脚本\n2.甲骨文VPS打开所有端口规则\n3.开启BBR加速（支持kvm与openvz）\n4.VPS内核版本更新：5.6以下升级至5.6以上\n5.查询或更改本地IP优先级\n0.返回上一层\n 请选择："
-readp "$ab" cd
-case "$cd" in 
-1 )
-bash <(curl -sSL https://cdn.jsdelivr.net/gh/kkkyg/vpsroot/root.sh);;
-2 )
-rm -rf /etc/iptables/rules.v4 && rm -rf /etc/iptables/rules.v6
-green "甲骨文VPS的系统所有端口规则已打开";;
-3 )
-if [[ $vi = lxc ]]; then
-[[ -n $(lsmod | grep bbr) ]] && green "已开启系统自带的BBR+FQ加速"
-red "VPS虚拟化类型为lxc，目前不支持安装第三方各类加速 "
-elif [[ $vi = openvz ]]; then
-green "VPS虚拟化类型为openvz，支持lkl-haproxy版的BBR-PLUS加速" && wget --no-cache -O lkl-haproxy.sh https://github.com/mzz2017/lkl-haproxy/raw/master/lkl-haproxy.sh && bash lkl-haproxy.sh
-elif [[ ! $vi =~ lxc|openvz ]]; then
-if [[ -z $(lsmod | grep bbr) ]]; then
-yellow "未开启BBR+FQ加速，安装中……"
-echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf 
-echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf 
-sysctl -p
-[[ -n $(lsmod | grep bbr) ]] && green "安装结束，已开启BBR+FQ加速"
-else
-green "检测完毕：你的VPS已经开启BBR+FQ加速"
-fi
-fi
-back;;
-4 ) 
-bash <(curl -sSL https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/ucore.sh);;
-5 ) 
-v46=`curl -s https://ip.gs -k`
-[[ $v46 =~ '.' ]] && green "当前VPS本地为IPV4优先：$v46" || green "当前VPS本地为IPV6优先：$v46"
-ab="1.设置IPV4优先\n2.设置IPV6优先\n3.恢复系统默认优先\n0.返回上一层\n 请选择："
-readp "$ab" cd
-case "$cd" in 
-1 )
-[[ -n /etc/gai.conf ]] && grep -qE '^ *precedence ::ffff:0:0/96  100' /etc/gai.conf || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
-sed -i '/^label 2002::\/16   2/d' /etc/gai.conf
-v46=`curl -s https://ip.gs -k`
-[[ $v46 =~ '.' ]] && green "当前VPS本地为IPV4优先：$v46" || green "当前VPS本地为IPV6优先：$v46"
-back;;
-2 )
-[[ -n /etc/gai.conf ]] && grep -qE '^ *label 2002::/16   2' /etc/gai.conf || echo 'label 2002::/16   2' >> /etc/gai.conf
-sed -i '/^precedence ::ffff:0:0\/96  100/d' /etc/gai.conf
-v46=`curl -s https://ip.gs -k`
-[[ $v46 =~ '.' ]] && green "当前VPS本地为IPV4优先：$v46" || green "当前VPS本地为IPV6优先：$v46"
-back;;
-3 )
-sed -i '/^precedence ::ffff:0:0\/96  100/d;/^label 2002::\/16   2/d' /etc/gai.conf
-v46=`curl -s https://ip.gs -k`
-[[ $v46 =~ '.' ]] && green "当前VPS本地为IPV4优先：$v46" || green "当前VPS本地为IPV6优先：$v46"
-back;;
-0 ) Other
-esac;;
-0 ) bash CFwarp.sh
-esac
-}
-
 WGCFins(){
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.conf /etc/wireguard/wgcf-account.toml /etc/wireguard/wgcf+p.log /etc/wireguard/ID /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 ShowWGCF
@@ -421,10 +363,10 @@ systemctl start wg-quick@wgcf >/dev/null 2>&1
 red "纯IPV6的VPS目前不支持安装Socks5-WARP" && bash CFwarp.sh
 elif [[ -n $v4 && -z $v6 ]]; then
 systemctl start wg-quick@wgcf >/dev/null 2>&1
-[[ $wgcfv4 =~ on|plus && ! $wgcfv6 =~ on|plus ]] && red "纯IPV4的VPS已安装Wgcf-WARP-IPV4(选项2)，不支持安装Socks5-WARP" && bash CFwarp.sh
+[[ $wgcfv4 =~ on|plus && ! $wgcfv6 =~ on|plus ]] && red "纯IPV4的VPS已安装Wgcf-WARP-IPV4(选项1)，不支持安装Socks5-WARP" && bash CFwarp.sh
 fi
 systemctl start wg-quick@wgcf >/dev/null 2>&1
-[[ $wgcfv4 =~ on|plus && $wgcfv6 =~ on|plus ]] && red "已安装Wgcf-WARP-IPV4+IPV6(选项4)，不支持安装Socks5-WARP" && bash CFwarp.sh
+[[ $wgcfv4 =~ on|plus && $wgcfv6 =~ on|plus ]] && red "已安装Wgcf-WARP-IPV4+IPV6(选项3)，不支持安装Socks5-WARP" && bash CFwarp.sh
 if [[ $release = Centos ]]; then 
 yum -y install epel-release && yum -y install net-tools
 rpm -ivh http://pkg.cloudflareclient.com/cloudflare-release-el$vsid.rpm
@@ -712,19 +654,17 @@ clear
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 bblue " WARP-WGCF/SOCKS5安装脚本：2022.2.4更新 Beta 4 版本"
 yellow " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃"    
-yellow " 切记：进入脚本快捷方式 bash CFwarp.sh "    
-white " ==================一、VPS相关调整选择（更新中）=========================================="
-green "  1. 一键ROOT脚本、开启甲骨文端口规则、开启BBR加速、更新5.6以上内核、设置VPS本地IP优先级 "
+yellow " 切记：进入脚本快捷方式 bash CFwarp.sh "
 white " =================二、WARP功能选择（更新中）============================================="
-yellow " 选项（2、3、4）为安装WARP三个配置方案，可随意切换安装。选项（5）与选项（2、3、4）在特定情况下可共存"
-green "  2. 安装Wgcf-WARP:虚拟IPV4"      
-green "  3. 安装Wgcf-WARP:虚拟IPV6"      
-green "  4. 安装Wgcf-WARP:虚拟IPV4+IPV6" 
-[[ $cpu != AMD64 ]] && red "  5. 提示：当前VPS的CPU并非AMD64架构，目前不支持安装Socks5-WARP(+)" || green "  5. 安装Socks5-WARP：IPV4本地Socks5代理"
+yellow " 选项（1、2、3）为安装WARP三个配置方案，可随意切换安装。选项（5）与选项（2、3、4）在特定情况下可共存"
+green "  1. 安装Wgcf-WARP:虚拟IPV4"      
+green "  2. 安装Wgcf-WARP:虚拟IPV6"      
+green "  3. 安装Wgcf-WARP:虚拟IPV4+IPV6" 
+[[ $cpu != AMD64 ]] && red "4. 提示：当前VPS的CPU并非AMD64架构，目前不支持安装Socks5-WARP(+)" || green "  4. 安装Socks5-WARP：IPV4本地Socks5代理"
 white " -------------------------------------------------------------------------------------------"    
-green "  6. WARP账户升级：WARP+账户与WARP+Teams账户，一键screen无限刷流量"
-green "  7. WARPR解锁NF奈飞：自动识别WARP配置环境，一键screen刷奈飞IP" 
-green "  8. WARP开启、停止、卸载"
+green "  5. WARP账户升级：WARP+账户与WARP+Teams账户，一键screen无限刷流量"
+green "  6. WARPR解锁NF奈飞：自动识别WARP配置环境，一键screen刷奈飞IP" 
+green "  7. WARP开启、停止、卸载"
 green "  0. 退出脚本 "
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 white " VPS系统信息如下："
@@ -733,14 +673,13 @@ IP_Status_menu
 echo
 readp "请输入数字:" Input
 case "$Input" in     
- 1 ) Other;;
- 2 ) WGCFv4;;
- 3 ) WGCFv6;;
- 4 ) WGCFv4v6;;
- 5 ) [[ $cpu = AMD64 ]] && SOCKS5ins || bash CFwarp.sh;; 
- 6 ) WARPupre;;
- 7 ) REnfwarp;;	
- 8 ) WARPOC;;
+ 1 ) WGCFv4;;
+ 2 ) WGCFv6;;
+ 3 ) WGCFv4v6;;
+ 4 ) [[ $cpu = AMD64 ]] && SOCKS5ins || bash CFwarp.sh;; 
+ 5 ) WARPupre;;
+ 6 ) REnfwarp;;	
+ 7 ) WARPOC;;
  0 ) exit 0
 esac
 }
