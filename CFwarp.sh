@@ -709,7 +709,7 @@ start_menu(){
 ShowWGCF;ShowSOCKS5
 clear
 red "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-bblue " WARP-WGCF/SOCKS5安装脚本：2022.1.22更新 Beta 3 版本"
+bblue " WARP-WGCF/SOCKS5安装脚本：2022.2.4更新 Beta 4 版本"
 yellow " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃"    
 yellow " 切记：进入脚本快捷方式 bash CFwarp.sh "    
 white " ==================一、VPS相关调整选择（更新中）=========================================="
