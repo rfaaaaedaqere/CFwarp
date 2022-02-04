@@ -349,8 +349,6 @@ esac
 }
 
 WGCFins(){
-[[ -e /root/check.sh ]] && screen -S aw -X quit
-[[ -e /root/WARP-CR.sh ]] && screen -S cr -X quit
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-profile.conf /etc/wireguard/wgcf-account.toml /etc/wireguard/wgcf+p.log /etc/wireguard/ID /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 ShowWGCF
 if [[ $release = Centos ]]; then
@@ -409,7 +407,8 @@ mv -f wgcf-profile.conf /etc/wireguard >/dev/null 2>&1
 mv -f wgcf-account.toml /etc/wireguard >/dev/null 2>&1
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
 CheckWARP
-[[ -e /root/check.sh ]] && screen -dmS aw bash -c '/bin/bash /root/check.sh' 
+[[ -e /root/check.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/check.sh'
+[[ -e /root/WARP-CR.sh ]] && screen -S cr -X quit ; screen -dmS cr bash -c '/bin/bash /root/WARP-CR.sh'
 ShowWGCF && WGCFmenu && back
 }
 
@@ -446,6 +445,8 @@ warp-cli --accept-tos set-mode proxy >/dev/null 2>&1
 warp-cli --accept-tos enable-always-on >/dev/null 2>&1
 ShowSOCKS5
 [[ $socks5 = on ]] && green "Socks5-WARP启动成功" || red "Socks5-WARP(+)启动失败"
+[[ -e /root/check.sh ]] && screen -S aw -X quit ; screen -dmS aw bash -c '/bin/bash /root/check.sh'
+[[ -e /root/WARP-CR.sh ]] && screen -S cr -X quit ; screen -dmS cr bash -c '/bin/bash /root/WARP-CR.sh'
 S5menu && back
 }
 
